@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0F0A04">
+<title>화엄경 砢馡</title>
+<link rel="manifest" href="./manifest.json">
+<link rel="apple-touch-icon" href="./icon-192.png">
+<meta name="apple-mobile-web-app-title" content="화엄경">
+<meta name="format-detection" content="telephone=no">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;700&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0F0A04; --bg2:#1A1005; --bg3:#241508; --bg4:#2E1C0A; --bg5:#3A2510;
+  --gold:#C8922A; --gold2:#E8B84B; --gold3:#F5D98A; --gold4:#FFF0CC;
+  --goldd:#7A5518; --golddim:#4A3210;
+  --text:#F0DEB0; --text2:#C8A870; --text3:#8A6840; --text4:#5A4020;
+  --border:rgba(200,146,42,0.18); --border2:rgba(200,146,42,0.35);
+  --red:#C84820; --teal:#2A6A5A; --teal2:#4ABAAA;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:var(--bg);font-family:'Noto Sans KR',sans-serif;color:var(--text);overflow:hidden;overflow-x:hidden;position:relative;touch-action:manipulation;-webkit-text-size-adjust:none;text-size-adjust:none}
+body{display:flex;flex-direction:column;max-width:480px;margin:0 auto}
+
+/* SPLASH */
+#splash{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;transition:opacity 1s ease}
+#splash.hide{opacity:0;pointer-events:none}
+.sp-lotus{font-size:52px;animation:spulse 2s ease-in-out infinite}
+@keyframes spulse{0%,100%{opacity:.5;transform:scale(.93)}50%{opacity:1;transform:scale(1.05)}}
+.sp-title{font-family:'Noto Serif KR',serif;font-size:30px;font-weight:700;color:var(--gold2);letter-spacing:6px;margin-top:6px}
+.sp-sub{font-size:11px;color:var(--text3);letter-spacing:3px;margin-top:2px}
+.sp-bar{width:100px;height:2px;background:var(--bg4);border-radius:2px;margin-top:14px;overflow:hidden}
+.sp-fill{height:100%;background:var(--gold);animation:spload 2s ease forwards}
+@keyframes spload{from{width:0}to{width:100%}}
+
+/* STATUS */
+.sbar{background:var(--bg2);padding:9px 18px 7px;display:flex;justify-content:space-between;font-size:12px;color:var(--text4);flex-shrink:0}
+
+/* HEADER */
+.hdr{background:var(--bg2);border-bottom:1px solid var(--border);padding:8px 14px 10px;flex-shrink:0}
+.hdr-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.logo{display:flex;flex-direction:column;cursor:pointer}
+.logo-main{font-family:'Noto Serif KR',serif;font-size:20px;font-weight:700;color:var(--gold2);letter-spacing:4px}
+.logo-sub{font-size:10px;color:var(--text3);letter-spacing:2px;margin-top:1px}
+.hdr-right{display:flex;align-items:center;gap:8px}
+.hbtn{background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;padding:4px;display:flex;align-items:center}
+.hbtn:active{color:var(--gold2)}
+.cnt-badge{background:var(--bg3);border:1px solid var(--border);border-radius:16px;padding:3px 9px;font-size:11px;color:var(--text2);display:flex;align-items:center;gap:4px}
+.cnt-n{font-size:13px;font-weight:500;color:var(--gold2)}
+
+/* ── 독송 버튼 (상단 고정) ── */
+.sutra-btn-bar{background:var(--bg3);border-bottom:1px solid var(--border2);padding:7px 14px;display:flex;align-items:center;gap:8px;flex-shrink:0}
+.sutra-open-btn{flex:1;padding:9px 0;background:var(--golddim);border:1px solid var(--gold);border-radius:10px;color:var(--gold3);font-size:13px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;letter-spacing:1px;transition:all .2s}
+.sutra-open-btn:active{background:var(--bg4);color:var(--text2)}
+.sutra-cnt-sm{font-size:11px;color:var(--text3);white-space:nowrap}
+
+/* BOTTOM NAV */
+.bnav{background:var(--bg2);border-top:1px solid var(--border);display:flex;flex-shrink:0;padding-bottom:max(env(safe-area-inset-bottom), 8px)}
+.bni{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:7px 1px 9px;cursor:pointer;border-top:2px solid transparent;transition:all .2s}
+.bni.active{border-top-color:var(--gold)}
+.bni-icon{font-size:17px;color:var(--text4)}
+.bni.active .bni-icon{color:var(--gold2)}
+.bni-lbl{font-size:7.5px;color:var(--text4);letter-spacing:.1px;text-align:center;line-height:1.2}
+.bni.active .bni-lbl{color:var(--gold2)}
+.bni-wrap{position:relative;display:inline-flex;align-items:center;justify-content:center}
+.bni-badge{position:absolute;top:-6px;right:-8px;background:#C84820;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 3px;line-height:1;display:none}
+
+/* PAGES */
+.pages{flex:1;overflow:hidden;position:relative;width:100%;overflow-x:hidden}
+.page{position:absolute;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch;display:none;background:var(--bg);width:100%;overflow-x:hidden;box-sizing:border-box}
+.page::-webkit-scrollbar{width:4px}
+.page::-webkit-scrollbar-thumb{background:var(--golddim);border-radius:2px}
+.page::-webkit-scrollbar-track{background:var(--bg2)}
+.page.active{display:block}
+#p0.active{display:flex;flex-direction:column}
+
+/* ━━━━ 독송 페이지 ━━━━ */
+.font-ctrl{display:flex;gap:5px}
+.fbtn{width:28px;height:28px;background:var(--bg4);border:1px solid var(--border);border-radius:7px;color:var(--text3);cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:'Noto Serif KR',serif}
+.fbtn:active{border-color:var(--gold);color:var(--gold2)}
+.tab-row{display:flex;gap:0;margin-bottom:8px}
+.stab{flex:1;padding:6px 0;text-align:center;font-size:12px;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s}
+.stab.active{color:var(--gold2);border-bottom-color:var(--gold)}
+.chnav{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.chnav::-webkit-scrollbar{display:none}
+.chbtn{flex-shrink:0;padding:4px 10px;border-radius:12px;border:1px solid transparent;font-size:11px;color:var(--text3);background:transparent;cursor:pointer;margin-right:5px;white-space:nowrap;transition:all .2s}
+.chbtn.active{background:var(--golddim);border-color:var(--gold);color:var(--gold3)}
+.prog-bar{height:2px;background:var(--bg4)}
+.prog-fill{height:100%;background:var(--gold2);transition:width .3s;width:0%}
+.sm-hdr{background:var(--bg2);border-bottom:1px solid var(--border);padding:10px 14px 12px;flex-shrink:0}
+.sm-hdr-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.sm-title{font-family:'Noto Serif KR',serif;font-size:15px;font-weight:500;color:var(--gold2);letter-spacing:2px}
+.sutra-scroll{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;width:100%;box-sizing:border-box}
+.sutra-scroll::-webkit-scrollbar{width:3px}
+.sutra-scroll::-webkit-scrollbar-thumb{background:var(--golddim);border-radius:2px}
+.sbody{padding:12px 16px 30px;font-family:'Noto Serif KR',serif;font-size:15px;line-height:1.9;color:var(--text);user-select:none;-webkit-user-select:none;word-break:break-all;overflow-wrap:break-word;width:100%;box-sizing:border-box;overflow-x:hidden}
+.sbody *{user-select:none;-webkit-user-select:none}
+.spage{display:none}.spage.active{display:block}
+.sec-hdr{margin:20px 0 10px;padding:10px 14px;background:var(--bg3);border-left:3px solid var(--gold);border-radius:0 8px 8px 0}
+.sec-num{font-family:'Noto Sans KR',sans-serif;font-size:10px;color:var(--goldd);letter-spacing:2px;margin-bottom:2px}
+.sec-name{font-size:13px;font-weight:500;color:var(--gold2);letter-spacing:1px}
+.sec-ko{font-family:'Noto Sans KR',sans-serif;font-size:10px;color:var(--text3);margin-top:1px}
+.sp{margin-bottom:1.0em;word-break:break-all;overflow-wrap:break-word;white-space:normal;width:100%;display:block;box-sizing:border-box}
+.sp.hm-txt{font-size:0.78em;color:var(--text3);margin-top:0.3em;margin-bottom:1.2em;line-height:1.7}
+.sp.ko{color:var(--text)}
+.dual-blk{margin-bottom:1.4em;border-bottom:1px solid var(--border);padding-bottom:0.8em}
+.dual-blk:last-child{border-bottom:none}
+.dual-ko{display:block;margin-bottom:0.3em;color:var(--text)}
+.dual-hm{display:block;font-size:0.75em;color:var(--text3);line-height:1.7}
+.sp.ko{font-family:'Noto Sans KR',sans-serif;font-size:15px;line-height:1.9;color:var(--text);word-break:keep-all;word-wrap:break-word;overflow-wrap:break-word}
+.ctrl-box{background:var(--bg2);border-top:1px solid var(--border);padding:10px 14px 14px;flex-shrink:0}
+.ctrl-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.ctrl-lbl{font-size:11px;color:var(--text3);min-width:38px;display:flex;align-items:center;gap:4px}
+.sdot{width:6px;height:6px;border-radius:50%;background:var(--text4);transition:background .3s;flex-shrink:0}
+.sdot.on{background:var(--gold2)}
+input[type=range]{flex:1;-webkit-appearance:none;height:3px;background:var(--bg5);border-radius:2px;outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--gold);cursor:pointer;border:2px solid var(--gold2)}
+.ctrl-val{font-size:11px;color:var(--gold2);min-width:20px;text-align:right}
+.btn-row{display:flex;gap:7px}
+.btn-play{flex:1;padding:10px;background:var(--golddim);border:1px solid var(--gold);border-radius:10px;color:var(--gold3);font-size:13px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;letter-spacing:.5px;transition:all .2s}
+.btn-play:active,.btn-play.playing{background:var(--bg4);border-color:var(--goldd);color:var(--text2)}
+.btn-sm{width:42px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;color:var(--text3);font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.btn-sm:active{border-color:var(--gold);color:var(--gold2)}
+
+/* 목록형 카드 */
+.post-card-row{display:flex;align-items:center;gap:10px;padding:10px 12px;cursor:pointer}
+.post-card-row:active{background:var(--bg3)}
+.card-thumb-wrap{flex-shrink:0;width:72px;height:72px;border-radius:8px;overflow:hidden;background:var(--bg3)}
+.card-thumb{width:72px;height:72px;object-fit:cover;display:block}
+.card-text-wrap{flex:1;min-width:0}
+.post-body-preview{font-size:12px;color:var(--text3);margin-top:3px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+
+/* 전체보기 모달 */
+#fullPostModal{position:fixed;inset:0;z-index:600;background:var(--bg);display:none;flex-direction:column;padding-top:env(safe-area-inset-top)}
+#fullPostModal.show{display:flex}
+.fp-hdr{background:var(--bg2);border-bottom:1px solid var(--border);padding:12px 14px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;min-height:54px}
+.fp-close{background:var(--golddim);border:1px solid var(--gold);border-radius:10px;color:var(--gold3);font-size:14px;font-weight:500;padding:8px 18px;cursor:pointer;flex-shrink:0}
+.fp-body{flex:1;overflow-y:auto;padding:14px;padding-bottom:calc(env(safe-area-inset-bottom) + 20px)}
+.fp-tag-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.fp-title{font-size:16px;font-weight:500;color:var(--text);margin-bottom:10px;line-height:1.5}
+.fp-text{font-size:14px;color:var(--text2);line-height:1.9;white-space:pre-wrap;margin-top:10px}
+.fp-embed{display:none}.fp-embed.show{display:block}
+
+/* ━━━━ 공통 게시판 ━━━━ */
+.page-title-bar{padding:14px 14px 0;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.page-title{font-family:'Noto Serif KR',serif;font-size:16px;color:var(--gold2);letter-spacing:2px}
+.board-list{padding:12px 14px 80px}
+
+/* 게시물 카드 */
+.post-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:14px;position:relative}
+.post-card-header{padding:12px 14px 10px}
+.post-tag-row{display:flex;align-items:center;gap:7px;margin-bottom:7px}
+.post-tag{font-size:10px;padding:2px 8px;border-radius:8px;background:rgba(200,146,42,.15);color:var(--gold2);border:1px solid var(--border)}
+.post-date{font-size:10px;color:var(--text4)}
+.post-title{font-size:14px;font-weight:500;color:var(--text);margin-bottom:5px;line-height:1.5}
+.post-body-text{font-size:13px;color:var(--text2);line-height:1.8;margin-bottom:8px;white-space:pre-wrap}
+.post-body-text.collapsed{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+
+/* 유튜브 썸네일 자동 표시 */
+.post-yt-thumb{width:100%;position:relative;cursor:pointer;background:var(--bg3)}
+.post-yt-thumb img{width:100%;display:block;aspect-ratio:16/9;object-fit:cover}
+.post-yt-thumb .yt-overlay{position:absolute;inset:0;background:rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center}
+.post-yt-thumb .yt-play-ico{width:52px;height:52px;background:rgba(200,146,42,.3);border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--gold3)}
+.post-yt-embed{display:none}
+.post-yt-embed.show{display:block}
+.post-yt-embed iframe{width:100%;height:200px;border:none;display:block}
+.yt-open-link{display:flex;align-items:center;gap:6px;padding:8px 14px;font-size:12px;color:var(--teal2);text-decoration:none;border-top:1px solid var(--border)}
+
+/* 이미지 */
+.post-img{width:100%;display:block;max-height:320px;object-fit:contain;background:var(--bg3)}
+
+/* 더보기/접기 */
+.more-btn{font-size:11px;color:var(--gold2);cursor:pointer;padding:0 0 10px;display:block}
+
+/* 카드 액션바 */
+.post-actions{display:flex;border-top:1px solid var(--border);background:var(--bg3)}
+.post-act-btn{flex:1;padding:8px 0;text-align:center;font-size:11px;color:var(--text3);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;border:none;background:none}
+.post-act-btn:not(:last-child){border-right:1px solid var(--border)}
+.post-act-btn:active{color:var(--gold2)}
+.post-act-btn.del{color:var(--red)}
+
+/* 맨위로 버튼 */
+
+
+/* 빈 게시판 */
+.empty-board{padding:50px 20px;text-align:center;color:var(--text4)}
+.empty-icon{font-size:40px;margin-bottom:12px}
+.empty-txt{font-size:13px;line-height:1.8}
+
+/* TOAST */
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--bg4);border:1px solid var(--gold);color:var(--gold3);font-size:12px;padding:9px 18px;border-radius:20px;white-space:nowrap;z-index:2000;opacity:0;transition:opacity .3s;pointer-events:none}
+.toast.show{opacity:1}
+
+/* SETTINGS */
+#settPane{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;align-items:flex-end}
+#settPane.show{display:flex}
+.sett-sheet{background:var(--bg2);border-top:1px solid var(--border2);border-radius:20px 20px 0 0;padding:18px 18px 40px;width:100%;max-width:480px;margin:0 auto}
+.sett-title{font-family:'Noto Serif KR',serif;font-size:15px;color:var(--gold2);margin-bottom:14px;letter-spacing:2px}
+.sett-item{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--text2)}
+.sett-item:last-child{border-bottom:none}
+.toggle{width:42px;height:23px;background:var(--bg5);border-radius:12px;position:relative;cursor:pointer;border:1px solid var(--border);transition:background .3s}
+.toggle.on{background:var(--golddim);border-color:var(--gold)}
+.tthumb{position:absolute;top:2px;left:2px;width:17px;height:17px;background:var(--text4);border-radius:50%;transition:all .3s}
+.toggle.on .tthumb{left:21px;background:var(--gold2)}
+.sett-close{width:100%;margin-top:16px;padding:11px;background:var(--golddim);border:1px solid var(--gold);border-radius:10px;color:var(--gold3);font-size:14px;cursor:pointer}
+.rbtn{background:none;border:1px solid var(--border);border-radius:7px;color:var(--text3);font-size:11px;padding:3px 9px;cursor:pointer}
+
+/* ━━━ 관리자 패널 ━━━ */
+#adminLock{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:3000;display:none;align-items:center;justify-content:center}
+#adminLock.show{display:flex}
+.lock-box{background:var(--bg2);border:1px solid var(--border2);border-radius:20px;padding:28px 24px;width:300px;text-align:center}
+.lock-title{font-family:'Noto Serif KR',serif;font-size:18px;color:var(--gold2);letter-spacing:3px;margin-bottom:6px}
+.lock-sub{font-size:11px;color:var(--text3);margin-bottom:20px;letter-spacing:1px}
+.lock-input{width:100%;background:var(--bg4);border:1px solid var(--border);border-radius:10px;padding:12px;color:var(--gold3);font-size:20px;text-align:center;letter-spacing:8px;outline:none;margin-bottom:12px}
+.lock-input:focus{border-color:var(--gold)}
+.lock-btn{width:100%;padding:12px;background:var(--golddim);border:1px solid var(--gold);border-radius:10px;color:var(--gold3);font-size:14px;cursor:pointer;margin-bottom:8px}
+.lock-cancel{width:100%;padding:8px;background:none;border:none;color:var(--text3);font-size:13px;cursor:pointer}
+.lock-err{font-size:12px;color:#C84820;margin-top:6px;height:16px}
+
+#adminPanel{position:fixed;inset:0;background:var(--bg);z-index:2900;display:none;flex-direction:column}
+#adminPanel.show{display:flex}
+.adm-hdr{background:var(--bg2);border-bottom:1px solid var(--border2);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.adm-title{font-family:'Noto Serif KR',serif;font-size:16px;color:var(--gold2);letter-spacing:2px}
+.adm-close{background:none;border:none;color:var(--text3);font-size:22px;cursor:pointer}
+.adm-body{flex:1;overflow-y:scroll;padding:16px;padding-bottom:80px;position:relative;scrollbar-width:thin;scrollbar-color:var(--golddim) var(--bg3)}
+.adm-body::-webkit-scrollbar{width:6px;display:block}
+.adm-body::-webkit-scrollbar-thumb{background:var(--golddim);border-radius:3px}
+.adm-body::-webkit-scrollbar-track{background:var(--bg3)}
+.adm-section{background:var(--bg2);border:1px solid var(--border);border-radius:14px;margin-bottom:14px;overflow:hidden}
+.adm-sec-title{padding:12px 16px;font-size:13px;font-weight:500;color:var(--gold2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;cursor:pointer;justify-content:space-between}
+.adm-sec-body{padding:12px 16px;display:none}
+.adm-sec-body.open{display:block}
+.adm-field{margin-bottom:12px}
+.adm-label{font-size:11px;color:var(--text3);margin-bottom:4px;display:block;letter-spacing:.5px}
+.adm-input{width:100%;min-width:0;background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;outline:none;box-sizing:border-box;user-select:text;-webkit-user-select:text}
+.adm-input:focus{border-color:var(--gold)}
+.adm-textarea{width:100%;background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;outline:none;box-sizing:border-box;min-height:80px;resize:vertical;font-family:'Noto Sans KR',sans-serif;user-select:text;-webkit-user-select:text}
+.adm-textarea:focus{border-color:var(--gold)}
+.adm-tab-sel{display:flex;gap:0;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:14px}
+.adm-tab-opt{flex:1;padding:8px 0;text-align:center;font-size:12px;color:var(--text3);cursor:pointer;background:transparent;border:none;transition:all .2s}
+.adm-tab-opt.sel{background:var(--golddim);color:var(--gold3)}
+.adm-add-btn{width:100%;padding:10px;background:var(--golddim);border:1px solid var(--gold);border-radius:9px;color:var(--gold3);font-size:13px;cursor:pointer;margin-top:4px}
+.adm-add-btn:active{opacity:.7}
+.adm-item{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border)}
+.adm-item:last-child{border-bottom:none}
+.adm-item-text{flex:1;font-size:12px;color:var(--text2)}
+.adm-del-btn{background:rgba(200,72,32,.2);border:1px solid rgba(200,72,32,.4);border-radius:6px;color:#C84820;font-size:11px;padding:3px 8px;cursor:pointer;flex-shrink:0}
+.adm-edit-btn{background:rgba(200,146,42,.15);border:1px solid var(--border);border-radius:6px;color:var(--gold2);font-size:11px;padding:3px 8px;cursor:pointer;flex-shrink:0}
+
+/* 수정 모달 */
+#editModal{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:3500;display:none;align-items:flex-end}
+#editModal.show{display:flex}
+.edit-sheet{background:var(--bg2);border-top:1px solid var(--border2);border-radius:20px 20px 0 0;padding:18px 18px 36px;width:100%;max-width:480px;margin:0 auto;max-height:88vh;overflow-y:auto}
+.edit-sheet-title{font-family:'Noto Serif KR',serif;font-size:15px;color:var(--gold2);margin-bottom:14px;letter-spacing:1px}
+.edit-field{margin-bottom:12px}
+.edit-label{font-size:11px;color:var(--text3);margin-bottom:4px;display:block}
+.edit-input{width:100%;background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;outline:none;box-sizing:border-box;user-select:text;-webkit-user-select:text}
+.edit-input:focus{border-color:var(--gold)}
+.edit-textarea{width:100%;background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;outline:none;box-sizing:border-box;min-height:80px;resize:vertical;font-family:'Noto Sans KR',sans-serif;user-select:text;-webkit-user-select:text}
+.edit-textarea:focus{border-color:var(--gold)}
+.edit-btn-row{display:flex;gap:8px;margin-top:14px}
+.edit-save-btn{flex:1;padding:12px;background:var(--golddim);border:1px solid var(--gold);border-radius:10px;color:var(--gold3);font-size:13px;cursor:pointer}
+.edit-cancel-btn{padding:12px 18px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;color:var(--text3);font-size:13px;cursor:pointer}
+.adm-pw-row{display:flex;gap:8px;align-items:flex-end}
+.adm-pw-btn{padding:9px 14px;background:var(--golddim);border:1px solid var(--gold);border-radius:8px;color:var(--gold3);font-size:12px;cursor:pointer;white-space:nowrap}
+
+/* 순번 뱃지 */
+.adm-item-rank{flex-shrink:0;width:18px;height:18px;background:var(--bg4);border:1px solid var(--border);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--text3);font-weight:500}
+
+/* ⬆ 맨위 항목 비활성화 */
+.adm-up-btn:disabled{opacity:.3;cursor:not-allowed;pointer-events:none}
+</style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+  <div class="sp-lotus">🪷</div>
+  <div class="sp-title">화엄경 砢馡</div>
+  <div class="sp-sub">오서 시안 합장</div>
+  <div class="sp-bar"><div class="sp-fill"></div></div>
+</div>
+
+<!-- STATUS BAR -->
+<div class="sbar">
+  <span id="timeDisp">9:41</span>
+  <span>🪷 라비</span>
+  <span style="letter-spacing:2px">●●●</span>
+</div>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-top">
+    <div class="logo" id="logoBtn">
+      <div class="logo-main">화엄경 砢馡</div>
+      <div class="logo-sub">오서 시안 합장 🙏</div>
+    </div>
+    <div class="hdr-right">
+      <div class="cnt-badge">독송 <span class="cnt-n" id="cntN">0</span>회</div>
+      <button class="hbtn" id="settBtn" onclick="openSett()">⚙</button>
+      <button class="hbtn" onclick="openLock()" title="관리자" style="font-size:15px;color:var(--goldd)">🔐</button>
+    </div>
+  </div>
+</div>
+
+<!-- PAGES -->
+<div class="pages">
+
+  <!-- ══ PAGE 0: 독송 메인 ══ -->
+  <div class="page active" id="p0">
+    <div class="sm-hdr">
+      <div class="sm-hdr-top">
+        <div class="sm-title">📖 대방광불화엄경</div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <div class="font-ctrl">
+            <button class="fbtn" onclick="chFont(-1)" style="font-size:12px">가</button>
+            <button class="fbtn" onclick="chFont(1)" style="font-size:16px">가</button>
+          </div>
+          <span style="font-size:10px;color:var(--text4)" id="progTxt">1/10절</span>
+        </div>
+      </div>
+      <div class="tab-row">
+        <div class="stab active" onclick="sTab('ko',this)">본문</div>
+      </div>
+      <div class="chnav" id="chnav"></div>
+    </div>
+    <div class="prog-bar"><div class="prog-fill" id="progFill"></div></div>
+    <div class="sutra-scroll" id="sutraScroll" onscroll="onSScroll()">
+      <div class="sbody">
+        <div class="spage" id="sp-hm"></div>
+        <div class="spage active" id="sp-ko"></div>
+        <div class="spage" id="sp-dual"></div>
+      </div>
+    </div>
+    <div class="ctrl-box">
+      <div class="ctrl-row">
+        <span class="ctrl-lbl"><span class="sdot" id="sdot"></span>속도</span>
+        <input type="range" min="1" max="10" value="9" step="1" id="spSlider" oninput="updSpd(this.value)">
+        <span class="ctrl-val" id="spdVal">9</span>
+      </div>
+      <div class="btn-row">
+        <button class="btn-play" id="playBtn" onclick="toggleScroll()">
+          <span id="playIco">▶</span><span id="playLbl">자동 슬랩</span>
+        </button>
+        <button class="btn-sm" onclick="resetScroll()" title="처음으로">↺</button>
+        <button class="btn-sm" onclick="markDone()" title="독송 완료 +1">✓</button>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bnav">
+  <div class="bni active" onclick="goPage(0,this)">
+    <span class="bni-icon">📖</span>
+    <span class="bni-lbl">독송</span>
+  </div>
+  <div class="bni" onclick="window.open('https://band.us/band/103030407','_blank')">
+    <span class="bni-icon">💬</span>
+    <span class="bni-lbl">커뮤니티</span>
+  </div>
+</div>
+
+<!-- SETTINGS -->
+<div id="settPane" onclick="closeSett(event)">
+  <div class="sett-sheet" onclick="event.stopPropagation()">
+    <div class="sett-title">설정</div>
+    <div class="sett-item">터치 후 스크롤 자동 재개
+      <div class="toggle on" id="tgResume" onclick="togOpt('resume',this)"><div class="tthumb"></div></div>
+    </div>
+    <div class="sett-item">완독 알림
+      <div class="toggle on" id="tgNotify" onclick="togOpt('notify',this)"><div class="tthumb"></div></div>
+    </div>
+    <div class="sett-item">화면 꺼짐 방지
+      <div class="toggle" id="tgWake" onclick="togOpt('wake',this)"><div class="tthumb"></div></div>
+    </div>
+    <div class="sett-item">독송 횟수 초기화 <button class="rbtn" onclick="resetCnt()">초기화</button></div>
+    <div class="sett-item">앱 정보 · 저작권 · 밴드
+      <a href="./privacy.html" style="background:var(--golddim);border:1px solid var(--gold);border-radius:7px;color:var(--gold3);font-size:11px;padding:3px 9px;text-decoration:none;">보기</a>
+    </div>
+    <button class="sett-close" onclick="closeSett()">닫기</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- ━━━ 전체보기 모달 ━━━ -->
+<div id="fullPostModal">
+  <div class="fp-hdr">
+    <div class="fp-tag-row">
+      <span class="post-tag" id="fp-tag"></span>
+      <span class="post-date" id="fp-date"></span>
+    </div>
+    <button class="fp-close" onclick="closeFullPost()">✕ 닫기</button>
+  </div>
+  <div class="fp-body">
+    <div class="fp-title" id="fp-title"></div>
+    <div id="fp-media"></div>
+    <div class="fp-text" id="fp-body"></div>
+  </div>
+</div>
+
+<!-- ━━━ 게시물 수정 모달 ━━━ -->
+<div id="editModal" onclick="closeEditModal(event)">
+  <div class="edit-sheet" onclick="event.stopPropagation()">
+    <div class="edit-sheet-title">✏️ 게시물 수정</div>
+    <input type="hidden" id="edit-idx">
+    <input type="hidden" id="edit-tab">
+    <div class="edit-field">
+      <label class="edit-label">제목</label>
+      <input class="edit-input" id="edit-title" placeholder="제목">
+    </div>
+    <div class="edit-field">
+      <label class="edit-label">내용</label>
+      <textarea class="edit-textarea" id="edit-body" placeholder="내용"></textarea>
+    </div>
+    <div class="edit-field">
+      <label class="edit-label">유튜브 링크 또는 영상 ID</label>
+      <input class="edit-input" id="edit-ytid" placeholder="유튜브 링크 전체 또는 ID 붙여넣기" oninput="extractYtId(this)">
+      <div id="edit-yt-preview" style="margin-top:8px;display:none">
+        <img id="edit-yt-preview-img" src="" style="width:100%;border-radius:8px;border:1px solid var(--border)" alt="썸네일 미리보기">
+      </div>
+    </div>
+    <div class="edit-field">
+      <label class="edit-label">이미지 URL</label>
+      <input class="edit-input" id="edit-imgurl" placeholder="https://...">
+    </div>
+    <div class="edit-btn-row">
+      <button class="edit-save-btn" onclick="saveEdit()">💾 저장</button>
+      <button class="edit-cancel-btn" onclick="closeEditModal()">취소</button>
+    </div>
+  </div>
+</div>
+
+<!-- ━━━ 잠금화면 ━━━ -->
+<div id="adminLock">
+  <div class="lock-box">
+    <div class="lock-title">🔐 관리자</div>
+    <div class="lock-sub">오서 시안 전용</div>
+    <input type="password" class="lock-input" id="lockInput" placeholder="••••••" maxlength="10"
+           onkeydown="if(event.key==='Enter')checkPw()">
+    <button class="lock-btn" onclick="checkPw()">입장</button>
+    <button class="lock-cancel" onclick="closeLock()">취소</button>
+    <div class="lock-err" id="lockErr"></div>
+  </div>
+</div>
+
+<!-- ━━━ 관리자 패널 ━━━ -->
+<div id="adminPanel">
+  <div class="adm-hdr">
+    <button onclick="closeAdmin()" style="background:var(--golddim);border:1px solid var(--gold);border-radius:10px;color:var(--gold3);font-size:13px;padding:8px 16px;cursor:pointer;display:flex;align-items:center;gap:6px;font-weight:500">← 메인으로</button>
+    <div class="adm-title">⚙ 관리자</div>
+    <div style="width:80px"></div>
+  </div>
+
+  <!-- 스크롤 영역 래퍼 -->
+  <div id="admWrap" style="flex:1;position:relative;overflow:hidden;display:flex;">
+    <div class="adm-body" id="admBody">
+
+      <!-- 게시판 이름 변경 -->
+      <div class="adm-section">
+        <div class="adm-sec-body open">
+          <div style="font-size:11px;color:var(--text3);margin-bottom:10px">게시판 이름을 변경하면 앱 전체에 바로 반영됩니다.</div>
+          <div style="margin-bottom:10px">
+            <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+              <span style="font-size:11px;color:var(--text3);min-width:28px">탭1</span>
+              <input class="adm-input" id="tabname-1" placeholder="게시판1 이름" style="flex:1;min-width:0">
+              <button class="adm-add-btn" style="width:auto;flex-shrink:0;padding:8px 14px;font-size:12px;margin-top:0" onclick="saveTabName(1,document.getElementById('tabname-1').value.trim())">저장</button>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+              <span style="font-size:11px;color:var(--text3);min-width:28px">탭2</span>
+              <input class="adm-input" id="tabname-2" placeholder="게시판2 이름" style="flex:1;min-width:0">
+              <button class="adm-add-btn" style="width:auto;flex-shrink:0;padding:8px 14px;font-size:12px;margin-top:0" onclick="saveTabName(2,document.getElementById('tabname-2').value.trim())">저장</button>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+              <span style="font-size:11px;color:var(--text3);min-width:28px">탭3</span>
+              <input class="adm-input" id="tabname-3" placeholder="게시판3 이름" style="flex:1;min-width:0">
+              <button class="adm-add-btn" style="width:auto;flex-shrink:0;padding:8px 14px;font-size:12px;margin-top:0" onclick="saveTabName(3,document.getElementById('tabname-3').value.trim())">저장</button>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+              <span style="font-size:11px;color:var(--text3);min-width:28px">탭4</span>
+              <input class="adm-input" id="tabname-4" placeholder="게시판4 이름" style="flex:1;min-width:0">
+              <button class="adm-add-btn" style="width:auto;flex-shrink:0;padding:8px 14px;font-size:12px;margin-top:0" onclick="saveTabName(4,document.getElementById('tabname-4').value.trim())">저장</button>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+              <span style="font-size:11px;color:var(--text3);min-width:28px">탭5</span>
+              <input class="adm-input" id="tabname-5" placeholder="게시판5 이름" style="flex:1;min-width:0">
+              <button class="adm-add-btn" style="width:auto;flex-shrink:0;padding:8px 14px;font-size:12px;margin-top:0" onclick="saveTabName(5,document.getElementById('tabname-5').value.trim())">저장</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="adm-section">
+        <div class="adm-sec-title" onclick="toggleAdmSec(this)">🔑 비밀번호 변경 <span>▾</span></div>
+        <div class="adm-sec-body">
+          <div class="adm-field">
+            <label class="adm-label">현재 비밀번호</label>
+            <input class="adm-input" id="pw-cur" type="password" placeholder="현재 비밀번호">
+          </div>
+          <div class="adm-field">
+            <label class="adm-label">새 비밀번호</label>
+            <input class="adm-input" id="pw-new" type="password" placeholder="새 비밀번호">
+          </div>
+          <div class="adm-field">
+            <label class="adm-label">새 비밀번호 확인</label>
+            <input class="adm-input" id="pw-new2" type="password" placeholder="새 비밀번호 다시 입력">
+          </div>
+          <button class="adm-add-btn" onclick="changePw()">🔑 비밀번호 변경</button>
+        </div>
+      </div>
+
+      <!-- 게시물 등록 -->
+      <div class="adm-section">
+        <div class="adm-sec-title" onclick="toggleAdmSec(this)">✏️ 새 게시물 등록 & 수정 <span>▾</span></div>
+        <div class="adm-sec-body open">
+          <div class="adm-field">
+            <label class="adm-label">게시판 선택</label>
+            <div class="adm-tab-sel">
+              <button class="adm-tab-opt sel" data-board="1" onclick="selBoard(this)">경전이야기</button>
+              <button class="adm-tab-opt" data-board="2" onclick="selBoard(this)">오늘의명상</button>
+              <button class="adm-tab-opt" data-board="3" onclick="selBoard(this)">일일게송</button>
+              <button class="adm-tab-opt" data-board="4" onclick="selBoard(this)">생활정보</button>
+              <button class="adm-tab-opt" data-board="5" onclick="selBoard(this)">라비출판사</button>
+            </div>
+          </div>
+          <div class="adm-field">
+            <label class="adm-label">제목</label>
+            <input class="adm-input" id="post-title" placeholder="게시물 제목">
+          </div>
+          <div class="adm-field">
+            <label class="adm-label">내용 (선택)</label>
+            <textarea class="adm-textarea" id="post-body" placeholder="내용을 입력하세요"></textarea>
+          </div>
+          <div class="adm-field">
+            <label class="adm-label">유튜브 링크 또는 영상 ID (썸네일 자동 표시)</label>
+            <input class="adm-input" id="post-ytid" placeholder="유튜브 링크 전체 또는 ID 붙여넣기" oninput="extractYtId(this)">
+            <div id="yt-preview" style="margin-top:8px;display:none">
+              <img id="yt-preview-img" src="" style="width:100%;border-radius:8px;border:1px solid var(--border)" alt="썸네일 미리보기">
+            </div>
+          </div>
+          <div class="adm-field">
+            <label class="adm-label">이미지 URL (선택)</label>
+            <input class="adm-input" id="post-imgurl" placeholder="https://... 이미지 주소">
+          </div>
+          <div class="adm-field">
+            <label class="adm-label">이미지 파일 직접 올리기 (선택)</label>
+            <input type="file" accept="image/*" id="post-imgfile" style="color:var(--text2);font-size:12px;width:100%">
+          </div>
+          <button class="adm-add-btn" onclick="submitPost()">+ 게시물 등록</button>
+          <!-- 등록된 게시물 목록 -->
+          <div id="adm-post-list" style="margin-top:14px"></div>
+        </div>
+      </div>
+
+      <div style="text-align:center;padding:20px 0 10px;font-size:11px;color:var(--text4)">오서 시안 합장 🪷</div>
+      <button onclick="closeAdmin()" style="width:100%;padding:14px;background:var(--golddim);border:1px solid var(--gold);border-radius:12px;color:var(--gold3);font-size:14px;cursor:pointer;margin-bottom:80px;letter-spacing:1px">← 메인으로 돌아가기</button>
+    </div>
+
+    <!-- 커스텀 스크롤바 트랙 -->
+    <div id="admScrollTrack" style="position:absolute;top:4px;right:3px;width:5px;bottom:4px;background:var(--bg3);border-radius:3px;opacity:0;transition:opacity .3s;pointer-events:none;">
+      <div id="admScrollThumb" style="position:absolute;width:100%;background:var(--golddim);border-radius:3px;min-height:30px;top:0;transition:background .2s;"></div>
+    </div>
+  </div>
+
+  <!-- 관리자 패널 맨위로 버튼 (adminPanel 밖에 위치해야 fixed 작동) -->
+</div>
+
+<script>
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// 금강경 데이터 (원본 그대로)
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+const CHS = [
+  {n:"서문",nm:"서",ko:"序"},
+  {n:"제1권①",nm:"세주묘엄품",ko:"世主妙嚴品"},
+  {n:"제1권②",nm:"세주묘엄품",ko:"世主妙嚴品"},
+  {n:"제1권③",nm:"세주묘엄품",ko:"世主妙嚴品"},
+  {n:"제1권④",nm:"세주묘엄품",ko:"世主妙嚴品"},
+  {n:"제1권⑤",nm:"세주묘엄품",ko:"世主妙嚴品"},
+  {n:"제1권⑥",nm:"세주묘엄품",ko:"世主妙嚴品"},
+  {n:"제1권⑦",nm:"세주묘엄품",ko:"世主妙嚴品"},
+  {n:"제1권⑧",nm:"세주묘엄품",ko:"世主妙嚴品"},
+  {n:"제1권⑨",nm:"세주묘엄품",ko:"世主妙嚴品"}
+];
+const HM = [];
+
+const HJ = [];
+const KO = [
+  [
+    "대주 신역 대방광불화엄경 서(大周新譯大方廣佛華嚴經序) 大周新譯大方廣佛華嚴經序",
+    "천책 금륜성신황제 지음(天冊金輪聖神皇帝製)1) 天冊金輪聖神皇帝製",
+    "들으니， 천지조화[造化權輿]2)의 시초에는 천도(天道)가 나눠지지 않았는데 구룡(龜龍：河圖洛書)3)에 상(象)을 붙여 주역을 처음 만듦으로 인문(人文：인류문화)이 비로소 나타나게 되었다. 비록 1만 8천 세(一萬八千歲)4)를 똑같이 천하의 나라[區]5)에 임했으나， 72현군[七十二君]6)이 어찌 무변광대한 뜻을 알았으리요. 이로 말미암아 사람들이 4인(忍)7)을 알지 못하여 6취(趣)8) 가운데 윤회하고 집집마다 5개(蓋)9)에 얽매여 3도(塗) 아래에 빠지니， 취암(鷲岩：영취산)이 서역에 우뚝하게 드높고 코끼리에 경전을 싣고[象駕]10) 동녘으로 건너옴에 미쳐 혜일(慧日)의 법왕이 4대(大)를 초월하여 높이 보시고 중천(中天)의 조어(調御)가 10지(地)를 초월하여 높이 거하사， 철위(鐵圍)11)를 포괄하시고 사겁(沙劫)12)을 연촉(延促)하시니， 그 본체는 곧 생멸이 없고 그 형상은 곧 오고 감이 없도다. 4념처(念處)・4정근(正勤)13)의 37품(品)14)으로 그 행을 삼으시고 자(慈)・비(悲)・희(喜)・사(捨)의 4무량심(無量法)으로 그 마음을 운용하시니， 방편의 힘을 헤아리기 어렵고 원대(圓對)15)의 기틀에 실마리가 많도다. 태공[太虛]으로 하나 되어 도량이 되었거니 어찌 숫자로 다할 수 있겠으며， 섬개(纖芥)의 작은 곳까지 들어가니 명상(名相)과 언어로 기록할 것이 아니다. 뭐라 이름 붙일 수 없는 자는 오직 대각(大覺)이신저. 蓋聞：“造化權輿之首，天道未分，龜龍繫象之初，人文始著。雖萬八千歲，同臨有截之區，七十二君，詎識無邊之義。”由是人迷四忍，輪迴於六趣之中；家纏五蓋，沒溺於三塗之下，及夫鷲巖西峙，象駕東驅，慧日法王，超四大而高視，中天調御，越十地以居尊，包括鐵圍，延促沙劫，其爲體也，則不生不滅；其爲相也，則無去無來。念處、正勤，三十七品爲其行；慈、悲、喜、捨，四無量法運其心，方便之力難思，圓對之機多緖。混大空而爲量，豈筭數之能窮，入纖芥之微區，匪名言之可述。無得而稱者，其唯大覺歟！",
+    "내가(측천무후) 옛 겁(劫)에 숙인(宿因)을 북돋아 외람되이 부처님의 수기(授記)를 받은 터라， 금선(金仙)이 교지를 내리시매 대운(大雲)16)의 게송이 먼저 드러나고 옥려(玉扆：천자의 병풍)에서 자세히 펼쳐봄에17) 보우(寶雨)18)의 문장이 뒤에 미치도다. 더구나 적선(積善)의 여경(餘慶)이 나의 몸에 모여 마침내 천지가 다스려지고 하해(河海)가 편안하니， 남다른 상서가 이미 날로 이르고 달로 기록하고 패엽(貝葉)19)의 신령한 경문이 또한 때로 이르고 해마다 흡족하다. 바다 건너 사막 건너 사방 공물[獻賝]20)의 예가 갖춰지고 험준한 산을 넘고 깊은 바다를 항해함에 여러 통역의 말을 다했도다.21) 朕曩劫植因，叨承佛記，金山降旨，大雲之偈先彰；玉扆披祥，寶雨之文後及。加以積善餘慶，俯集微躬，遂得地平天成，河淸海晏，殊禎絕瑞，旣日至而月書；貝牒靈文，亦時臻而歲洽。逾海越漠，獻賝之禮備焉；架險航深，重譯之辭罄矣。",
+    "『대방광불화엄경』이란 이는 제불(諸佛)의 밀장(密藏)이며 여래의 성해(性海)라， 보는 자는 그 지귀(指歸)를 알 수 없고 잡으려는 자는 그 끝을 아는 이 없다. 유학과 무학이 뜻으로 엿볼 수 없거니 이승과 삼승인들 어찌 들을 수 있으리오. 최승종지22)는 장엄의 발자취 이미 높고 보현과 문수는 원행의 인이 이에 찼도다. 한 구절 안에 끝없는 법계를 포함하고 한 터럭 가운데 찰토를 두어도 좁지 않다. 마갈타국에 처음으로 오묘한 법회 인연 일으키시고 보광법당에 적멸의 이치를 펼치셨다. 심오한 뜻을 생각해 보건대 번역이 진조(晉朝)에 있었으니 시대는 육대(六代)를 넘었고 햇수는 4백 년이다. 그러나 일부의 경전에 겨우 3만여 글자를 얻었을 뿐이라， 오직 구슬 절반만을 보여주었고 전체의 보배를 보여주지 못하였다. 나는 그 범본(梵本)이 먼저 우전국(于闐國)에 있다는 말을 듣고서 사신을 보내 범본을 받들어 근래에 비로소 이 땅에 도착하였다. 이미 백천 구절의 오묘한 게송을 보았고 이에 십만 자의 정문(正文)을 펼쳐 보았다. 이에 증성(證聖) 원년 을미년 월여(月旅)23) 고선(沽洗)24) 삭(朔) 무신(戊申) 14일 신유(辛酉)에 대변공사(大徧空寺)에서 필삭(筆削)25)을 친히 받아 경건히 이 경을 번역할 적에， 마침내 감로수를 얻어 미리 경신일 밤에 현몽했고 은택의 비가 쏟아져 그 이튿날 임술일에 실상(實相)의 문을 열고 또한 일미(一味)의 은택에 부합한 터라， 성력(聖歷) 2년 기해 10월 임오 삭(朔) 8일 기축(己丑)에 선사(繕寫：번역)의 일을 마쳐 성해(性海)에 파란(波瀾)을 더하고 법계의 강역(疆域)을 드넓혀서 대승돈교(大乘頓敎)가 널리 무궁하게 입혀지고 방광진전(方廣眞詮：화엄경)이 멀리 유식(有識：중생)을 포괄하니， 어찌 후오백세(後五百歲)에 문득 금구(金口)의 말씀을 만날 줄이야， 사바(娑婆)26)의 경계 가운데 문득 주함(珠函：화엄)의 비밀을 열 줄이야. 바라는 바는 사계(沙界：무한한 세계)에 천양(闡揚)하고 진구(塵區)에 베풀되 양요(兩曜：일월)과 아울러 길이 빛나며 시방에 가득히 길이 펼쳐지는 것이다. 한번 보배의 게송을 엿보매 경사가 심령에 넘치고， 세 번 깊은 종지를 반복하매 환희가 몸에 가득하다. 비록 설함도 없고 보임도 없어 이치가 불이(不二)의 문에 부합하나 말을 인해 말을 나타냄에 바야흐로 대천(大千)의 의27)를 밝히기에 문득 못난 문장으로 이에 서문을 쓰노라. 『大方廣佛華嚴經』者，斯乃諸佛之密藏，如來之性海，視之者，莫識其指歸，挹之者，罕測其涯際。有學、無學，志絕窺覦；二乘、三乘，寧希聽受。最勝種智，莊嚴之迹旣隆；普賢、文殊，願行之因斯滿。一句之內，包法界之無邊，一毫之中，置剎土而非隘。摩竭陀國，肇興妙會之緣；普光法堂，爰敷寂滅之理。緬惟奧義，譯在晉朝；時逾六代，年將四百。然一部之典，纔獲三萬餘言，唯啓半珠，未窺全寶。朕聞其梵本，先在于闐國中，遣使奉迎，近方至此。旣睹百千之妙頌，乃披十萬之正文。粤以證聖元年，歲次乙未，月旅沽洗，朔惟戊申，以其十四日辛酉，於大徧空寺，親受筆削，敬譯斯經。遂得甘露流津，預夢庚申之夕；膏雨灑潤，後覃壬戌之辰，式開實相之門，還符一味之澤，以聖曆二年，歲次己亥，十月壬午朔，八日己丑，繕寫畢功，添性海之波瀾，廓法界之疆域，大乘頓教，普被於無窮，方廣眞筌，遐該於有識，豈謂後五百歲，忽奉金口之言，娑婆境中，俄啓珠函之祕。所冀，闡揚沙界，宣暢塵區；竝兩曜而長懸，彌十方而永布。一窺寶偈，慶溢心靈；三復幽宗，喜盈身意。雖則無說無示，理符不二之門；然因言顯言，方闡大千之義，輒申鄙作，爰題序云。",
+    "대방광불화엄경(大方廣佛華嚴經) 제1권 大方廣佛華嚴經卷第一",
+    "우전국(于闐國) 삼장(三藏) 실차난타(實叉難陀) 한역 이운허 번역 于闐國三藏實叉難陀奉 制譯",
+    "1. 세주묘엄품(世主妙嚴品) ① 世主妙嚴品第一之一"
+  ],
+  [
+    "이와 같이 나는 들었다. 如是我聞：",
+    "어느때 부처님께서 마갈제국(摩竭提國) 아란야법보리도량[阿蘭若法菩提場]에서 처음 바른 깨달음[正覺]을 이루시었다. 그 땅은 견고하여 금강으로 되었는데， 가장 묘한 보배 바퀴와 여러 가지 훌륭한 꽃과 깨끗한 마니(摩尼)로 장엄하게 꾸몄으므로 온갖 빛깔들이 그지없이 나타났다. 마니보배로 당기[幢]가 되어 항상 광명을 놓고 아름다운 소리를 내며， 보배로 된 그물과 향과 꽃과 영락들이 두루 드리웠고， 마니보배가 자재하게 변화하여 한량없는 보물을 내리었다. 여러 가지 훌륭한 꽃이 땅 위에 흩어지고， 줄을 지어 있는 보배 나무에는 가지와 잎이 찬란하게 무성하여， 부처님의 신통한 힘으로 이 도량에는 모든 장엄이 그림자처럼 그 속에 나타났다. 그 보리수는 우뚝하게 높이 솟아 금강으로 밑동이 되고， 유리로 줄기가 되고， 여러 가지 보배로 가지[枝]와 회초리[條]가 되었으며， 보배로운 잎이 무성하여 구름같이 그늘지고 가지각색 아름다운 꽃들이 가지마다 만발하여 그림자가 드리워졌다. 또 마니로 열매가 되어 속으로 비치고 겉으로 아름다운 것이 꽃과 꽃 사이에 주렁주렁 달렸다. 그 나무들이 둥글게 퍼져 모두 광명을 놓으며， 광명 속에서 마니보배가 쏟아지고， 마니 속에는 많은 보살들이 구름처럼 한꺼번에 나타났다. 또 여래의 위신으로 보리수에서 미묘한 음성을 내어 가지가지 법문을 말하는 것이 끝이 없었다. 여래의 거처하시는 궁전과 누각은 넓고 아름답고 엄숙하고 화려한 것이 시방에 가득하여 가지각색 마니보배로 이루어졌으며， 여러 가지 훌륭한 꽃으로 장식하였고， 모든 장엄에서는 찬란한 광명이 구름같이 흘러나왔다. 궁전 사이에서는 그림자가 모여 당기가 되었고 한량없는 보살과 도량에 모인 대중들이 다 거기 모였으며， 광명과 부사의한 소리를 내는 마니보배로 그물이 되어 있어， 여래의 자재한 신통의 힘과 모든 경계가 모두 그 속에서 나오고， 온갖 중생과 거처하는 집들이 모두 그 가운데 영상처럼 나타났으며， 부처님의 신통한 힘으로 잠깐 동안에 법계(法界)를 둘러쌌다. 그 사자좌(獅子座)는 높고 넓고 기묘하고 훌륭하여 마니로 좌대(坐臺)가 되고 연꽃으로 그물이 되고 청정한 보배로 바퀴가 되고 여러 빛깔의 꽃으로 영락이 되고， 전당과 누각과 섬돌과 창호[戶牖]와 모든 물상(物象)들이 알맞게 장엄되었다. 보배 나무의 가지와 열매가 주위에 줄지어 있으며， 마니의 광명이 서로서로 비치는데， 시방 부처님이 변화하여 나타내는 구슬과 여러 보살들의 상투에 있는 보배에서 광명을 놓아 보내어 찬란하게 비치었다. 다시 부처님들의 위신으로 가피(加被)하여 여래의 크고 넓은 경지를 연설하니， 미묘한 음성이 멀리 퍼져 들리지 않는 데가 없었다. 一時，佛在摩竭提國阿蘭若法菩提場中，始成正覺。其地堅固，金剛所成；上妙寶輪，及衆寶華、淸淨摩尼，以爲嚴飾，諸色相海，無邊顯現；摩尼爲幢，常放光明，恒出妙音，衆寶羅網，妙香華纓，周帀垂布；摩尼寶王，變現自在，雨無盡寶及衆妙華分散於地；寶樹行列，枝葉光茂。佛神力故，令此道場一切莊嚴於中影現。其菩提樹高顯殊特：金剛爲身，瑠璃爲幹；衆雜妙寶以爲枝條，寶葉枎疏，垂蔭如雲；寶華雜色，分枝布影，復以摩尼而爲其果，含輝發焰，與華閒列。其樹周圓咸放光明，於光明中雨摩尼寶，摩尼寶內，有諸菩薩，其衆如雲，俱時出現。又以如來威神力故，其菩提樹恒出妙音，說種種法，無有盡極。如來所處宮殿樓閣，廣博嚴麗，充徧十方，衆色摩尼之所集成，種種寶華以爲莊校；諸莊嚴具流光如雲，從宮殿閒萃影成幢。無邊菩薩ㆍ道場衆會咸集其所，以能出現諸佛光明不思議音，摩尼寶王而爲其網，如來自在神通之力所有境界皆從中出，一切衆生居處屋宅，皆於此中現其影像。又以諸佛神力所加，一念之閒，悉包法界。其師子座，高廣妙好：摩尼爲臺，蓮華爲網，淸淨妙寶以爲其輪，衆色雜華而作瓔珞，堂榭、樓閣、階砌、戶牖，凡諸物像，備體莊嚴；寶樹枝果，周迴閒列。摩尼光雲，互相照耀；十方諸佛，化現珠玉；一切菩薩髻中妙寶，悉放光明而來瑩燭。復以諸佛威神所持，演說如來廣大境界，妙音遐暢，無處不及。",
+    "그때 세존께서 이 사자좌에 앉아 온갖 법에서 가장 바른 깨달음을 이루시니， 지혜는 삼세에 들어가 모두 평등하여지고， 몸은 모든 세간에 가득하고， 음성은 시방세계의 말을 따르시니， 마치 허공이 여러 가지 물상을 포함하고 있으면서도 모든 경계에 차별이 없는 것 같았으며， 또 허공이 온갖 것에 두루하여 여러 세계에 평등하게 따라 들어가는 듯하였다. 몸은 모든 도량에 항상 앉아 보살 대중 가운데 위엄과 빛나심이 혁혁하여 마치 찬란한 햇빛이 세계에 비친 듯하며 삼세(三世)에서 지으신 복덕 바다가 모두 청정하였고， 여러 부처님 나라에 항상 일부러 태어나시며， 그지없는 몸매와 원만한 광명이 온 법계에 두루하되 평등하여 차별이 없으시고， 모든 법을 연설하심은 큰 구름이 일어나는 듯하였다. 털끝마다 온갖 세계를 받아들이되 서로 장애되지 아니하며， 제각기 한량없는 신통한 힘을 나타내어 모든 중생들을 교화하여 조복(調伏)하시고， 몸이 시방세계에 두루하면서도 오고 가는 일이 없었으며， 지혜는 모든 겉 모양에 들어가 법이 비고 고요함을 알았으며， 삼세 부처님들이 갖고 있는 신통 변화를 광명 속에서 모두 보게 되고， 온갖 부처님 세계와 부사의한 겁에 있는 장엄을 모두 나타나게 하였다. 爾時，世尊處于此座，於一切法，成最正覺，智入三世悉皆平等，其身充滿一切世閒，其音普順十方國土，譬如虛空具含衆像，於諸境界無所分別；又如虛空普徧一切，於諸國土平等隨入。身恒徧坐一切道場，菩薩衆中威光赫奕，如日輪出，照明世界，三世所行，衆福大海，悉已淸淨，而恒示生諸佛國土，無邊色相，圓滿光明，徧周法界，等無差別；演一切法，如布大雲。一一毛端，悉能容受一切世界而無障礙，各現無量神通之力，教化調伏一切衆生；身徧十方而無來往，智入諸相，了法空寂。三世諸佛所有神變，於光明中靡不咸睹；一切佛土不思議劫所有莊嚴，悉令顯現。",
+    "열 부처님 세계[十佛世界]의 티끌 수 같은 보살마하살들에게 둘러싸였는데， 그 이름은 보현(普賢)보살마하살ㆍ보덕최승등광조(普德最勝燈光照)보살마하살ㆍ보광사자당(普光師子幢)보살마하살ㆍ보보염묘광(普寶焰妙光)보살마하살ㆍ보음공덕해당(普音功德海幢)보살마하살ㆍ보지광조여래경(普智光照如來境)보살마하살ㆍ보보계화당(普寶髻華幢)보살마하살ㆍ보각열의성(普覺悅意聲)보살마하살ㆍ보청정무진복광(普淸淨無盡福光)보살마하살ㆍ보광명상(普光明相)보살마하살ㆍ해월광대명(海月光大明)보살마하살ㆍ운음해광무구장(雲音海光無垢藏)보살마하살ㆍ공덕보계지생(功德寶髻智生)보살마하살ㆍ공덕자재왕대광(功德自在王大光)보살마하살ㆍ선용맹연화계(善勇猛蓮華髻)보살마하살ㆍ보지운일당(普智雲日幢)보살마하살ㆍ대정진금강제(大精進金剛臍)보살마하살ㆍ향염광당(香焰光幢)보살마하살ㆍ대명덕심미음(大明德深美音)보살마하살ㆍ대복광지생(大福光智生)보살마하살 들이었다. 이런 이들을 우두머리로 하여 열 부처 세계의 티끌 수가 있는데， 이 보살들은 모두 지나간 옛적에 비로자나여래와 함께 선근(善根)을 모으고 보살의 행을 닦았으므로， 다 여래의 선근 바다[善海]에서 난 이들이다. 모든 바라밀을 이미 성취하였고， 지혜의 눈이 밝고 사무쳐서 삼세를 평등하게 관찰하며， 모든 삼매를 구족하게 청정하였고， 변재가 바다와 같아서 넓고 크기가 끝이 없으며， 부처님의 공덕을 갖추었으므로 존엄하여 공경할 만하며， 중생들의 근성을 알고 적당한 대로 교화하여 조복하며， 법계장(法界藏)에 들어가서 지혜가 차별이 없으며， 부처님의 깊고 넓고 큰 해탈을 증득(證得)하였으므로 좋은 방편으로 어느 한 지위에 들어가서라도 바다 같은 서원의 힘으로 온갖 지위를 거두어 가지고 항상 지혜와 함께하여 오는 세상이 다할 때까지 이르는 이들이었다. 또 모든 부처님의 희유하고 넓고 크고 비밀한 경지를 통달하였고， 모든 부처님들의 평등한 법을 잘 알며， 여래의 넓고 밝은 지위에 나아가 한량없는 삼매 바다의 문에 들어갔으므로， 어느 곳에서나 마음대로 몸을 나타내어 세상에서 행하는 일을 모두 함께하고， 모두 기억하는 일이 넓고 커서 여러 가지 법을 모아 지녔으며， 변재가 훌륭하여 물러가지 않는 법수레를 운전하였다. 모든 부처님의 공덕 바다에 그 몸이 다 들어갔고， 모든 부처님 계시는 곳에 소원대로 들어가서 온갖 부처님께 공양하였고， 그지없는 겁 동안에 환희하여 게으르지 아니하며， 모든 부처님이 보리를 얻으신 곳에는 항상 그 가운데 있어 친근하게 모시고 떠나지 아니하였고， 항상 그들이 얻은 보현보살의 소원으로써 모든 중생들로 하여금 지혜의 몸이 구족하게 하는 이들이니， 이와 같이 한량없는 공덕을 성취하였다. 有十佛世界微塵數菩薩摩訶薩所共圍遶，其名曰：普賢菩薩摩訶薩、普德最勝燈光照菩薩摩訶薩、普光師子幢菩薩摩訶薩、普寶焰妙光菩薩摩訶薩、普音功德海幢菩薩摩訶薩、普智光照如來境菩薩摩訶薩、普寶髻華幢菩薩摩訶薩、普覺悅意聲菩薩摩訶薩、普淸淨無盡福光菩薩摩訶薩、普光明相菩薩摩訶薩、海月光大明菩薩摩訶薩、雲音海光無垢藏菩薩摩訶薩、功德寶髻智生菩薩摩訶薩、功德自在王大光菩薩摩訶薩、善勇猛蓮華髻菩薩摩訶薩、普智雲日幢菩薩摩訶薩、大精進金剛臍菩薩摩訶薩、香焰光幢菩薩摩訶薩、大明德深美音菩薩摩訶薩、大福光智生菩薩摩訶薩……。如是等而爲上首，有十佛世界微塵數，此諸菩薩，往昔皆與毘盧遮那如來共集善根，修菩薩行，皆從如來善根海生，諸波羅蜜悉已圓滿；慧眼明徹，等觀三世；於諸三昧，具足淸淨；辯才如海，廣大無盡；具佛功德，尊嚴可敬；知衆生根，如應化伏；入法界藏，智無差別；證佛解脫，甚深廣大；能隨方便，入於一地，而以一切願海所持，恒與智俱盡未來際；了達諸佛希有廣大祕密之境，善知一切佛平等法，已踐如來普光明地，入於無量三昧海門；於一切處，皆隨現身；世法所行，悉同其事；摠持廣大，集衆法海；辯才善巧，轉不退輪；一切如來功德大海，咸入其身；一切諸佛所在國土，皆隨願往；已曾供養一切諸佛，無邊際劫，歡喜無倦；一切如來得菩提處，常在其中，親近不捨；恒以所得普賢願海，令一切衆生智身具足。成就如是無量功德。",
+    "또 부처 세계의 티끌 수 같은 집금강신(執金剛神)이 있었으니， 이른바 묘한 빛 나라연[妙色那羅延] 집금강신， 해처럼 빠른 당기[日輪速疾幢] 집금강신， 수미산 꽃빛[須彌華光] 집금강신， 청정한 구름 소리[淸淨雲音] 집금강신， 모든 근이 미묘한[諸根美妙] 집금강신， 사랑스런 광명[可愛樂光明] 집금강신， 큰 나무 우레 소리[大樹雷音] 집금강신， 사자왕 광명[師子王光明] 집금강신， 비밀한 불꽃 좋은 눈[密焰勝目] 집금강신， 연꽃 빛 마니 상투[蓮華光摩尼髻] 집금강신 들이었다. 이런 이들이 우두머리가 되어 부처 세계의 티끌 수가 있었는데， 모두 지나간 옛적 한량없는 겁 동안에， 큰 소원을 세우고 여러 부처님을 친근하여 공양하기를 원하였으므로， 그 소원대로 수행함이 원만하여서 이미 저 언덕에 이르렀으며， 끝없이 깨끗한 복을 쌓았고， 모든 삼매로 행할 경계를 모두 통달하였고， 신통한 힘을 얻어 여래를 따라 머물며， 부사의한 해탈의 경계에 들어갔고， 여럿이 모인 곳에 있을 적에 위엄과 광명이 우뚝하며， 중생에 따라 마땅한 대로 몸을 나타내어 조복함을 보이며， 모든 부처님의 화신이 있는 곳마다 따라가서 화생하며， 온갖 여래의 머무는 곳에서 항상 부지런히 수호하고 있었다. 復有佛世界微塵數執金剛神，所謂；妙色那羅延執金剛神、日輪速疾幢執金剛神、須彌華光執金剛神、淸淨雲音執金剛神、諸根美妙執金剛神、可愛樂光明執金剛神、大樹雷音執金剛神、師子王光明執金剛神、密焰勝目執金剛神、蓮華光摩尼髻執金剛神……。如是等而爲上首，有佛世界微塵數，皆於往昔無量劫中恒發大願，願常親近供養諸佛；隨願所行，已得圓滿，到於彼岸；積集無邊淸淨福業，於諸三昧所行之境悉已明達；獲神通力，隨如來住，入不思議解脫境界；處於衆會，威光特達，隨諸衆生所應現身而示調伏；一切諸佛化形所在，皆隨化往；一切如來所住之處，常勤守護。",
+    "또 부처 세계의 티끌 수 같은 몸 많은 신[身衆神]이 있었으니， 이른바 꽃 상투 장엄한[華髻莊嚴] 몸 많은 신， 시방을 환하게 비추는[光照十方] 몸 많은 신， 바다 소리 조복하는[海音調伏] 몸 많은 신， 조촐한 꽃 상투 장엄[淨華嚴髻] 몸 많은 신， 한량없는 거동[無量威儀] 몸 많은 신， 가장 높은 빛 장엄[最上光嚴] 몸 많은 신， 조촐한 빛 향기 구름[淨光香雲] 몸 많은 신， 수호하여 거둬주는[守護攝持] 몸 많은 신， 두루 나퉈 성취하는 몸 많은 신[普現攝取]， 동요하지 않는 광명[不動光明] 몸 많은 신 들이었다. 이런 이들이 우두머리가 되어 부처 세계의 티끌 수가 있었는데， 모두 지나간 옛적에 큰 소원을 성취하여 온갖 부처님을 공양하고 섬기는 이들이었다. 復有佛世界微塵數身衆神，所謂：華髻莊嚴身衆神、光照十方身衆神、海音調伏身衆神、淨華嚴髻身衆神、無量威儀身衆神、最上光嚴身衆神、淨光香雲身衆神、守護攝持身衆神、普現攝取身衆神、不動光明身衆神……。如是等而爲上首，有佛世界微塵數，皆於往昔，成就大願，供養承事一切諸佛。",
+    "또 부처 세계의 티끌 수 같은 발로 가는 신[足行神]이 있었으니， 이른바 보배 인발 있는 손[寶印手] 발로 가는 신， 연꽃 빛[蓮華光] 발로 가는 신， 조촐한 꽃 상투[淸淨華髻] 발로 가는 신， 선한 소견 거둬 갖는[攝諸善見] 발로 가는 신， 묘한 보배 별 당기[妙寶星幢] 발로 가는 신， 묘한 음성 잘 내는[樂吐妙音] 발로 가는 신， 전단나무 빛[栴檀樹光] 발로 가는 신，연꽃 광명[蓮華光明] 발로 가는 신， 미묘한 광명[微妙光明] 발로 가는 신， 좋은 꽃 모아 쌓는[積集妙華] 발로 가는 신 들이었다. 이런 이들이 우두머리가 되어 부처 세계의 티끌 수가 있었는데， 모두 지나간 세상 한량없는 겁 동안에 여래를 친근하여 따라 모시고 떠나지 아니한 이들이었다. 復有佛世界微塵數足行神，所謂；寶印手足行神、蓮華光足行神、淸淨華髻足行神、攝諸善見足行神、妙寶星幢足行神、樂吐妙音足行神、栴檀樹光足行神、蓮華光明足行神、微妙光明足行神、積集妙華足行神……。如是等而爲上首，有佛世界微塵數，皆於過去無量劫中，親近如來，隨逐不捨。",
+    "또 부처 세계의 티끌 수 같은 도량신(道場神)이 있었으니， 이른바 조촐하게 장엄한 당기[淨莊嚴幢] 도량신， 수미산 보배 빛[須彌寶光] 도량신， 우레 소리 당기 모양[雷音幢相] 도량신， 꽃비 주는 묘한 눈[雨華妙眼] 도량신， 꽃 갓끈 빛난 상투[華纓光髻] 도량신， 보배 내려 장엄하는[雨寶莊嚴] 도량신， 용맹하고 향기로운 눈[勇猛香眼] 도량신， 금강 오색 구름[金剛彩雲] 도량신， 연화 광명[蓮華光明] 도량신， 묘한 광명 빛나는[妙光照耀] 도량신 들이었다. 이런 이들이 우두머리가 되어 부처 세계의 티끌 수가 있었는데， 모두 지난 세상에 한량없는 부처님을 만나서 소원을 이루고 공양을 많이 차린 이었다. 復有佛世界微塵數道場神，所謂：淨莊嚴幢道場神、須彌寶光道場神、雷音幢相道場神、雨華妙眼道場神、華纓光髻道場神、雨寶莊嚴道場神、勇猛香眼道場神、金剛彩雲道場神、蓮華光明道場神、妙光照耀道場神……。如是等而爲上首，有佛世界微塵數，皆於過去，値無量佛，成就願力，廣興供養。"
+  ],
+  [
+    "또 부처 세계의 티끌 수 같은 성 맡은 신[主城神]이 있었으니， 이른바 보배 봉우리 빛나는[寶峯光耀] 성 맡은 신， 묘하게 장엄한 궁전[妙嚴宮殿] 성 맡은 신， 맑고 기쁜 보배[淸淨喜寶] 성 맡은 신， 근심 없고 깨끗한[離憂淸淨] 성 맡은 신， 꽃등 불꽃 눈[華燈焰眼] 성 맡은 신， 불꽃 당기 밝게 뵈는[焰幢明現] 성 맡은 신， 복 많은 광명[盛福光明] 성 맡은 신， 조촐한 광명[淸淨光明] 성 맡은 신， 향기 상투 장엄[香髻莊嚴] 성 맡은 신， 묘한 보배 광명[妙寶光明] 성 맡은 신 들이었다. 이런 이들이 우두머리가 되어 부처 세계의 티끌 수가 있었는데， 모두 한량없는 부사의한 겁 동안에 여래가 계시는 궁전을 장엄하고 깨끗하게 하였다. 復有佛世界微塵數主城神，所謂；寶峯光耀主城神、妙嚴宮殿主城神、淸淨喜寶主城神、離憂淸淨主城神、華燈焰眼主城神、焰幢明現主城神、盛福光明主城神、淸淨光明主城神、香髻莊嚴主城神、妙寶光明主城神……。如是等而爲上首，有佛世界微塵數，皆於無量不思議劫，嚴淨如來所居宮殿。",
+    "또 부처 세계의 티끌 수 같은 땅 맡은 신[主地神]이 있었으니， 이른바 넓은 덕 깨끗한 꽃[普德淨華] 땅 맡은 신， 견고한 복 장엄[堅福莊嚴] 땅 맡은 신， 묘한 꽃 나무 장엄[妙華嚴樹] 땅 맡은 신， 뭇 보배 널리 흩는[普散衆寶] 땅 맡은 신， 깨끗한 눈 때를 보는[淨目觀時] 땅 맡은 신， 묘한 빛 좋은 눈[妙色勝眼] 땅 맡은 신， 향기로운 털 광명 내는[香毛發光] 땅 맡은 신， 듣기 좋은 음성[悅意音聲] 땅 맡은 신， 묘한 꽃 둘린 상투[妙華旋髻] 땅 맡은 신， 금강으로 장엄한 몸[金剛嚴體] 땅 맡은 신 들이었다. 이런 이들이 우두머리가 되어 부처 세계의 티끌 수가 있었는데， 모두 지난 옛적에 중대한 원을 세우고 부처님께 항상 친근하면서 복업을 함께 닦기를 원하였다. 復有佛世界微塵數主地神，所謂：普德淨華主地神、堅福莊嚴主地神、妙華嚴樹主地神、普散衆寶主地神、淨目觀時主地神、妙色勝眼主地神、香毛發光主地神、悅意音聲主地神、妙華旋髻主地神、金剛嚴體主地神……。如是等而爲上首，有佛世界微塵數，皆於往昔，發深重願，願常親近諸佛如來，同修福業。",
+    "또 한량없는 산 맡은 신[主山神]이 있었으니， 이른바 보배 봉우리 꽃 핀[寶峯開華] 산 맡은 신， 꽃 수풀 묘한 상투[華林妙髻] 산 맡은 신， 높은 당기 널리 비치는[高幢普照] 산 맡은 신， 티끌 없고 깨끗한 상투[離塵淨髻] 산 맡은 신， 시방에 밝게 비치는[光照十方] 산 맡은 신， 기운 센 광명[大力光明] 산 맡은 신， 위엄 광명 훌륭한[威光普勝] 산 맡은 신， 비밀하고 빛난 바퀴[微密光輪] 산 맡은 신， 넓은 눈 환히 보는[普眼現見] 산 맡은 신， 금강의 비밀한 눈[金剛密眼] 산 맡은 신 들이었다. 이런 이들이 우두머리가 되어 그 수가 한량이 없는데， 다 모든 법에 청정한 눈을 얻었다. 復有無量主山神，所謂：寶峯開華主山神ㆍ華林妙髻主山神、高幢普照主山神、離塵淨髻主山神、光照十方主山神、大力光明主山神、威光普勝主山神、微密光輪主山神、普眼現見主山神、金剛密眼主山神……。如是等而爲上首，其數無量，皆於諸法，得淸淨眼。",
+    "또 불가사의한 숲 맡은 신[主林神]이 있으니， 이른바 구름처럼 꽃 피는[布華如雲] 숲 맡은 신， 줄기 자라 빛 퍼지는[擢幹舒光] 숲 맡은 신， 움 돋아 빛나는[生芽發耀] 숲 맡은 신， 상서롭고 깨끗한 잎[吉祥淨葉] 숲 맡은 신， 드리운 불꽃 갊은[垂布焰藏] 숲 맡은 신， 깨끗한 광명[淸淨光明] 숲 맡은 신， 뜻에 맞는 우레 소리[可意雷音] 숲 맡은 신， 빛과 향기 두루 가득[光香普遍] 숲 맡은 신， 묘한 빛 멀리 비친[妙光廻耀] 숲 맡은 신， 꽃과 열매 빛 좋고 맛난[華果光味] 숲 맡은 신 들이었다. 이런 이들이 우두머리가 되어 불가사의한 수가 있었는데， 모두 한량없이 귀여운 광명을 가진 이들이었다. 復有不可思議數主林神，所謂：布華如雲主林神、擢幹舒光主林神、生芽發耀主林神、吉祥淨葉主林神、垂布焰藏主林神、淸淨光明主林神、可意雷音主林神、光香普徧主林神、妙光迴耀主林神、華果光味主林神……。如是等而爲上首，不思議數，皆有無量可愛光明。",
+    "또 한량없는 약 맡은 신[主藥神]이 있었으니， 이른바 상서로운[吉祥] 약 맡은 신， 전단 숲[栴檀林] 약 맡은 신， 깨끗한 광명[淸淨光明] 약 맡은 신， 널리 소문난[名稱普聞] 약 맡은 신， 털구멍에 빛나는[毛孔光明] 약 맡은 신， 널리 치료하고 깨끗한[普治淸淨] 약 맡은 신， 큰소리 치는[大發吼聲] 약 맡은 신， 해 가리우는 빛 당기[蔽日光幢] 약 맡은 신， 시방을 밝게 보는[明見十方] 약 맡은 신， 기운 돕고 눈 밝히는[益氣明目] 약 맡은 신 들이었다. 이런 이들이 우두머리가 되어 그 수가 한량없는데， 성품이때를 여의었고 인자하게 중생을 돕는 이들이었다. 復有無量主藥神，所謂：吉祥主藥神、栴檀林主藥神、淸淨光明主藥神、名稱普聞主藥神、毛孔光明主藥神、普治淸淨主藥神、大發吼聲主藥神、蔽日光幢主藥神、明見十方主藥神、益氣明目主藥神……。如是等而爲上首，其數無量，性皆離垢，仁慈祐物。",
+    "또 한량없는 농사 맡은 신[主稼神]이 있었으니， 이른바 부드럽고 맛좋은[柔軟勝味] 농사 맡은 신， 때 만난 꽃 조촐한 빛[時華淨光] 농사 맡은 신， 빛과 기운 건장한[色力勇健] 농사 맡은 신， 정기 증장하는[增長精氣] 농사 맡은 신， 뿌리 열매 널리 내는[普生根果] 농사 맡은 신， 묘한 장엄 상투 둘린[妙嚴環髻] 농사 맡은 신， 윤택하고 조촐한 꽃[潤澤淨華] 농사 맡은 신， 묘한 향기 이룩한[成就妙香] 농사 맡은 신， 보는 이가 사랑하는[見者愛樂] 농사 맡은 신， 때 없고 깨끗한 빛[離垢淨光] 농사 맡은 신 들이었다. 이런 이들이 우두머리가 되어 그 수가 한량없는데， 모두 큰 기쁨을 성취한 이들이었다. 復有無量主稼神，所謂：柔軟勝味主稼神、時華淨光主稼神、色力勇健主稼神、增長精氣主稼神、普生根果主稼神、妙嚴環髻主稼神、潤澤淨華主稼神、成就妙香主稼神、見者愛樂主稼神、離垢淨光主稼神……。如是等而爲上首，其數無量，莫不皆得大喜成就。",
+    "또 한량없는 강 맡은 신[主河神]이 있었으니， 이른바 빠른 물결 널리 내는[普發迅流] 강 맡은 신， 샘과 냇물 깨끗이 하는[普潔泉澗] 강 맡은 신， 티끌 없고 깨끗한 눈[離塵淨眼] 강 맡은 신， 시방에 두루 외치는[十方遍吼] 강 맡은 신， 중생을 구호하는[救護衆生] 강 맡은 신， 덥지 않고 깨끗한 빛[無熱淨光] 강 맡은 신， 기쁜 마음 널리 내는[普生歡喜] 강 맡은 신， 넓은 공덕 좋은 당기[廣德勝幢] 강 맡은 신， 여러 세상 환히 비추는 강[光照普世] 맡은 신， 바다 공덕 밝은 빛[海德光明] 강 맡은 신 들이었다. 이런 이들이 우두머리가 되어 한량없는 수가 있었는데， 모두 부지런히 마음 써서 중생을 이롭게 하였다. 復有無量主河神，所謂：普發迅流主河神、普潔泉㵎主河神、離塵淨眼主河神、十方徧吼主河神、救護衆生主河神、無熱淨光主河神、普生歡喜主河神、廣德勝幢主河神、光照普世主河神、海德光明主河神……。如是等而爲上首，有無量數，皆勤作意，利益衆生。",
+    "또 한량없는 바다 맡은 신[主海神]이 있었으니， 이른바 보배 광명 나타내는[出現寶光] 바다 맡은 신， 금강 당기 이룩하는[成金剛幢] 바다 맡은 신， 티끌과 때 멀리 여읜[遠塵離垢] 바다 맡은 신， 넓은 물 궁전 같은[普水宮殿] 바다 맡은 신， 상서로운 보배 달[吉祥寶月] 바다 맡은 신， 묘한 꽃 용의 상투[妙華龍髻] 바다 맡은 신， 빛과 맛 널리 지닌[普持光味] 바다 맡은 신， 보배 불꽃 빛난 광명[寶焰華光] 바다 맡은 신， 금강의 묘한 상투[金剛妙髻] 바다 맡은 신， 조수의 우레 소리[海潮雷聲] 바다 맡은 신 들이었다. 이런 이들이 우두머리가 되어 수가 한량없는데， 모두 여래의 큰 공덕 바다로 그 몸을 가득히 하였다. 復有無量主海神，所謂：出現寶光主海神、成金剛幢主海神、遠塵離垢主海神、普水宮殿主海神、吉祥寶月主海神、妙華龍髻主海神、普持光味主海神、寶焰華光主海神、金剛妙髻主海神、海潮雷聲主海神……。如是等而爲上首，其數無量，悉以如來功德大海充滿其身。"
+  ],
+  [
+    "또 한량없는 물 맡은 신[主水神]이 있었으니， 구름 당기 일으키는[興雲幢] 물 맡은 신， 조수와 구름 소리[海潮雲音] 물 맡은 신， 묘한 빛 바퀴 상투[妙色輪髻] 물 맡은 신， 공교롭게 소용 도는[善巧漩澓] 물 맡은 신， 때 없고 향기 쌓인[離垢香積] 물 맡은 신， 복덕 다리 빛난 음성[福橋光音] 물 맡은 신， 만족하여 자재한[知足自在] 물 맡은 신， 밝고 기쁜 착한 소리[淨喜善音] 물 맡은 신， 위엄 광명 널리 나타내는[普現威光] 물 맡은 신， 영각 소리 바다에 찬[吼音遍海] 물 맡은 신 들이었다. 이런 이들이 우두머리가 되어 그 수가 한량없는데， 항상 부지런히 모든 중생을 구호하여 이익하게 하는 이들이었다. 復有無量主水神，所謂：普興雲幢主水神、海潮雲音主水神、妙色輪髻主水神、善巧漩澓主水神、離垢香積主水神、福橋光音主水神、知足自在主水神、淨喜善音主水神、普現威光主水神、吼音徧海主水神……。如是等而爲上首，其數無量，常勤救護一切衆生而爲利益。",
+    "또 수없는 불 맡은 신[主火神]이 있었으니， 이른바 넓은 광명 불꽃 갊은 불 맡은 신[普光焰藏]， 광명 당기 널리 모은[寶集光幢] 불 맡은 신， 큰 광명 널리 비친[大光普照] 불 맡은 신， 여러 가지 묘한 궁전[衆妙宮殿] 불 맡은 신， 그지없는 광명 상투[無盡光髻] 불 맡은 신， 가지 가지 불꽃 눈[種種焰眼] 불 맡은 신， 시방 궁전 수미산 같은[十方宮殿如須彌山] 불 맡은 신， 위엄 광명 자재한[威光自在] 불 맡은 신， 광명으로 어둠 깨는[光明破暗] 불 맡은 신， 우레 소리 번개 빛[雷音電光] 불 맡은 신 들이었다. 이런 이들이 우두머리가 되어 헤아릴 수 없는데， 모두 가지각색 광명을 나타내어 중생들로 하여금 뜨거운 번뇌를 제멸하게 하는 이들이었다. 復有無數主火神，所謂：普光焰藏主火神、普集光幢主火神、大光普照主火神、衆妙宮殿主火神、無盡光髻主火神、種種焰眼主火神、十方宮殿如須彌山主火神、威光自在主火神、光明破暗主火神、雷音電光主火神……。如是等而爲上首，不可稱數，皆能示現種種光明，令諸衆生熱惱除滅。",
+    "또 한량없는 바람 맡은 신[主風神]이 있었으니， 이른바 걸림 없는 광명[無礙光明] 바람 맡은 신， 용맹한 업 널리 나타내는[普現勇業] 바람 맡은 신， 날려 치는 구름 당기[飄擊雲幢] 바람 맡은 신， 깨끗한 빛 장엄한[淨光莊嚴] 바람 맡은 신， 물 말리는 힘 가진[力能竭水] 바람 맡은 신， 큰소리로 외치는[大聲遍吼] 바람 맡은 신， 나무 끝에 상투 달린[樹杪垂髻] 바람 맡은 신， 간 데마다 걸림 없는[所行無礙] 바람 맡은 신， 여러 가지 궁전[種種宮殿] 바람 맡은 신， 큰 빛으로 널리 비친[大光普照] 바람 맡은 신 들이었다. 이런 이들이 우두머리가 되어 그 수가 한량이 없는데， 교만한 마음을 부지런히 없애는 이들이었다. 復有無量主風神，所謂：無礙光明主風神、普現勇業主風神、飄擊雲幢主風神、淨光莊嚴主風神、力能竭水主風神、大聲徧吼主風神、樹杪垂髻主風神、所行無礙主風神、種種宮殿主風神、大光普照主風神……。如是等而爲上首，其數無量，皆勤散滅我慢之心。",
+    "또 한량없는 허공 맡은 신[主空神]이 있었으니， 이른바 조촐한 빛 널리 비치는[淨光普照] 허공 맡은 신， 두루 다녀 깊고 넓은[普遊深廣] 허공 맡은 신， 상서로운 바람 내는[生吉祥風] 허공 맡은 신， 장애 없이 편안히 있는[離障安住] 허공 맡은 신， 널리 걷는 묘한 상투[廣步妙髻] 허공 맡은 신， 걸림 없이 빛난 불꽃[無礙光焰] 허공 맡은 신， 걸림없이 수승한 힘[無礙勝力空神] 허공 맡은 신， 때 없는 광명[離垢光明] 허공 맡은 신， 멀고 깊은 묘한 음성[深遠妙音] 허공 맡은 신， 시방에 광명 가득[光遍十方] 허공 맡은 신 들이었다. 이런 이들이 우두머리가 되어 그 수가 한량없는데， 마음에는 모두 때가 없어 넓고 크고 밝고 조촐하였다. 復有無量主空神，所謂：淨光普照主空神、普遊深廣主空神、生吉祥風主空神、離障安住主空神、廣步妙髻主空神、無礙光焰主空神、無礙勝力主空神、離垢光明主空神、深遠妙音主空神、光徧十方主空神……。如是等而爲上首，其數無量，心皆離垢，廣大明潔。",
+    "또 한량없는 방위 맡은 신[主方神]이 있었으니， 이른바 온갖 곳에 두루 있는[遍住一切] 방위 맡은 신， 광명 널리 나타내는[普現光明] 방위 맡은 신， 빛과 행동 장엄한[光行莊嚴] 방위 맡은 신， 두루 다녀 걸림없는[周行不礙] 방위 맡은 신， 의혹을 아주 끊은[永斷迷惑] 방위 맡은 신， 조촐한 허공 널리 다니는[普遊淨空] 방위 맡은 신， 큰 구름 당기 음성[大雲幢音] 방위 맡은 신， 상투 눈 어지러움 없는[髻目無亂] 방위 맡은 신， 세상 업을 두루 보는[普觀世業] 방위 맡은 신， 두루 다녀 구경하는[周遍遊覽] 방위 맡은 신 들이었다. 이런 이들이 우두머리가 되어 그 수가 한량이 없는데， 능히 방편으로 광명을 널리 놓아 시방을 비추는 일이 언제나 계속하여 끊어지지 아니하였다. 復有無量主方神，所謂：徧住一切主方神、普現光明主方神、光行莊嚴主方神、周行不礙主方神、永斷迷惑主方神、普遊淨空主方神、大雲幢音主方神、髻目無亂主方神、普觀世業主方神、周徧遊覽主方神……。如是等而爲上首，其數無量，能以方便，普放光明，恒照十方，相續不絕。",
+    "또 한량없는 밤 맡은 신[主夜神]이 있었으니， 이른바 넓은 공덕 조촐한 빛[普德淨光] 밤 맡은 신， 기쁜 눈 세상 보는[喜眼觀世] 밤 맡은 신， 세상 정기 보호하는[護世精氣] 밤 맡은 신， 고요한 바다 소리[寂靜海音] 밤 맡은 신， 좋은 일 널리 나타내는[普現吉祥] 밤 맡은 신， 나무 꽃 훨씬 피는[普發樹華] 밤 맡은 신， 평등하게 길러 주는[平等護育] 밤 맡은 신， 유희하여 즐겨하는[遊戱快樂] 밤 맡은 신， 모든 근(根)이 항상 기쁜[諸根常喜] 밤 맡은 신， 깨끗한 복을 내는[出生淨福] 밤 맡은 신 들이었다. 이런 이들이 우두머리가 되어 그 수가 한량이 없는데， 모두 부지런히 닦아 익혀 법으로써 낙을 삼는 이들이었다. 復有無量主夜神，所謂：普德淨光主夜神、喜眼觀世主夜神、護世精氣主夜神、寂靜海音主夜神、普現吉祥主夜神、普發樹華主夜神、平等護育主夜神、遊戲快樂主夜神、諸根常喜主夜神、出生淨福主夜神……。如是等而爲上首，其數無量，皆勤修習，以法爲樂。",
+    "또 한량없는 낮 맡은 신[主晝神]이 있었으니， 이른바 궁전을 나타내는[示現宮殿] 낮 맡은 신， 지혜 향을 일으키는[發起慧香] 낮 맡은 신， 훌륭한 장엄 좋아하는[樂勝莊嚴] 낮 맡은 신， 향과 꽃 미묘한 빛[香華妙光] 낮 맡은 신， 묘한 약 널리 모은[普集妙藥] 낮 맡은 신， 기쁜 눈 잘 만드는[樂作喜目] 낮 맡은 신， 여러 방위 나타내는[普現諸方] 낮 맡은 신， 큰 자비 광명[大悲光明] 낮 맡은 신， 선근 광명 비치는[善根光照] 낮 맡은 신， 아름다운 꽃 영락[妙華瓔珞] 낮 맡은 신 들이었다. 이런 이들이 우두머리가 되어 그 수가 한량이 없는데， 다 묘한 법을 믿고 알며 항상 함께 정근하여 궁전을 엄숙하게 꾸미었다. 復有無量主晝神，，所謂：示現宮殿主晝神、發起慧香主晝神、樂勝莊嚴主晝神、香華妙光主晝神、普集妙藥主晝神、樂作喜目主晝神、普現諸方主晝神、大悲光明主晝神、善根光照主晝神、妙華瓔珞主晝神……。如是等而爲上首，其數無量，皆於妙法能生信解，恒共精勤嚴飾宮殿。",
+    "또 한량없는 아수라왕(阿脩羅王)이 있으니， 이른바 라후[羅睺] 아수라왕， 비마질다라[毘摩質多羅] 아수라왕， 공교롭게 환술하는[巧幻術] 아수라왕， 권속 많은[大眷屬] 아수라왕， 기운 센[大力] 아수라왕， 두루 비치는[遍照] 아수라왕， 견고한 행 묘한 장엄[堅固行妙莊嚴] 아수라왕， 넓고 큰 원인 지혜[廣大因慧] 아수라왕， 훌륭한 덕 나타내는[出現勝德] 아수라왕， 묘하고 좋은 음성[妙好音聲] 아수라왕 들이었다. 이런 이들이 우두머리가 되어 그 수가 한량이 없는데， 모두 부지런히 정진하여 아만과 번뇌를 항복 받은 이들이었다. 復有無量阿脩羅王，所謂：羅睺阿脩羅王、毘摩質多羅阿脩羅王、巧幻術阿脩羅王、大眷屬阿脩羅王、大力阿脩羅王、徧照阿脩羅王、堅固行妙莊嚴阿脩羅王、廣大因慧阿脩羅王、出現勝德阿脩羅王、妙好音聲阿脩羅王……。如是等而爲上首，其數無量，悉已精勤摧伏我慢及諸煩惱。"
+  ],
+  [
+    "또 수효를 헤아릴 수 없는 가루라왕(迦樓羅王)이 있으니， 이른바 크게 빠른 힘[大速疾力] 가루라왕， 깨뜨릴 수 없는 보배 상투[無能壞寶髻] 가루라왕， 깨끗하고 빠른[淸淨速疾] 가루라왕， 마음이 퇴전하지 않는[心不退轉] 가루라왕， 큰 바다에서 붙잡는 힘[大海處攝持力] 가루라왕， 견고하고 깨끗한 빛[堅固淨光] 가루라왕， 잘 꾸민 갓과 상투[巧嚴冠髻] 가루라왕， 두루 빨리 나타나는[普捷示現] 가루라왕， 바다 두루 살피는[普觀海] 가루라왕， 여러 음성 넓은 눈[普音廣目] 가루라왕 들이었다. 이런 이들이 우두머리가 되어 헤아릴 수 없는 수가 있는데， 모두 큰 방편의 힘을 성취하고 모든 중생들을 잘 구호하여 붙들어 주는 이들었다. 復有不可思議數迦樓羅王、所謂：大速疾力迦樓羅王、無能壞寶髻迦樓羅王、淸淨速疾迦樓羅王、心不退轉迦樓羅王、大海處攝持力迦樓羅王、堅固淨光迦樓羅王、巧嚴冠髻迦樓羅王、普捷示現迦樓羅王、普觀海迦樓羅王、普音廣目迦樓羅王……。如是等而爲上首，不思議數，悉已成就大方便力，善能救攝一切衆生。",
+    "또 한량없는 긴나라왕(緊那羅王)이 있었으니， 이른바 선한 지혜 광명 하늘[善慧光明天] 긴나라왕， 묘한 꽃 당기[妙華幢] 긴나라왕， 가지가지 장엄[種種莊嚴] 긴나라왕， 뜻에 맞게 외치는 소리[悅意吼聲] 긴나라왕， 보배 나무 광명[寶樹光明] 긴나라왕， 보는 이 기뻐하는[見者欣樂] 긴나라왕， 가장 좋은 광명 장엄[最勝光莊嚴] 긴나라왕， 미묘한 꽃 당기[微妙華幢] 긴나라왕， 땅 흔드는 힘[動地力] 긴나라왕， 나쁜 무리 굴복받는[攝伏惡衆] 긴나라왕 들이었다. 이런 이들이 우두머리가 되어 그 수가 한량이 없는데， 모두 부지런히 정진하여 온갖 법을 관찰하고 마음이 항상 쾌락하여 자재하게 유희하는 이들이었다. 復有無量緊那羅王，所謂：善慧光明天緊那羅王、妙華幢緊那羅王、種種莊嚴緊那羅王、悅意吼聲緊那羅王、寶樹光明緊那羅王、見者欣樂緊那羅王、最勝光莊嚴緊那羅王、微妙華幢緊那羅王、動地力緊那羅王、攝伏惡衆緊那羅王……。如是等而爲上首，其數無量，皆勤精進，觀一切法，心恒快樂，自在遊戲。",
+    "또 한량없는 마후라가왕(摩睺羅伽王)이 있었으니， 이른바 좋은 지혜[善慧] 마후라가왕， 청정한 위엄 음성[淸淨威音] 마후라가왕， 훌륭한 지혜 장엄 상투[勝慧莊嚴髻] 마후라가왕， 아름다운 눈 가진[妙目主] 마후라가왕， 등대처럼 여러 사람 나아가는[如燈幢爲衆所歸] 마후라가왕， 가장 좋은 광명 당기[最勝光明幢] 마후라가왕， 사자 가슴[師子臆] 마후라가왕， 묘하게 장엄한 음성[衆妙莊嚴音摩睺] 마후라가왕， 수미산 견고한[須彌堅固] 마후라가왕， 사랑스런 광명[可愛樂光明] 마후라가왕 들이었다. 이런 이들이 우두머리가 되어 그 수가 한량이 없는데， 모두 넓고 큰 방편을 부지런히 닦아 중생들로 하여금 어리석은 그물을 영원히 끊게 하는 이들이었다. 復有無量摩睺羅伽王，所謂：善慧摩睺羅伽王、淸淨威音摩睺羅伽王、勝慧莊嚴髻摩睺羅伽王、妙目主摩睺羅伽王、如燈幢爲衆所歸摩睺羅伽王、最勝光明幢摩睺羅伽王、師子臆摩睺羅伽王、衆妙莊嚴音摩睺羅伽王、須彌堅固摩睺羅伽王、可愛樂光明摩睺羅伽王……。如是等而爲上首，其數無量，皆勤修習廣大方便，令諸衆生永割癡網。",
+    "또 한량없는 야차왕(夜叉王)이 있었으니， 이른바 비사문[毘沙門] 야차왕， 자재한 음성[自在音] 야차왕， 무서운 무기 가진[嚴持器仗] 야차왕， 큰 지혜[大智慧] 야차왕， 불꽃 눈 가진[焰眼主] 야차왕， 금강 눈[金剛眼] 야차왕， 억센 팔뚝[勇健臂] 야차왕， 용감하게 적군 대적하는[勇敵大軍] 야차왕， 재물 많은[富資財] 야차왕， 높은 산 헐어내[力壤高山]는 야차왕 들이었다. 이런 이들이 우두머리가 되어 그 수가 한량이 없는데， 모두 부지런히 온갖 중생들을 수호하는 이들이었다. 復有無量夜叉王，所謂：毘沙門夜叉王、自在音夜叉王、嚴持器仗夜叉王、大智慧夜叉王、焰眼主夜叉王、金剛眼夜叉王、勇健臂夜叉王、勇敵大軍夜叉王、富資財夜叉王、力壞高山夜叉王……。如是等而爲上首，其數無量，皆勤守護一切衆生。",
+    "또 한량없는 큰 용왕(龍王)이 있었으니， 이른바 비루박차[毘樓博叉]용왕， 사갈라(娑竭羅)용왕， 구름 소리 묘한 당기[雲音妙幢] 용왕， 불꽃 입 바다 광명[焰口海光] 용왕， 넓고 높은 구름 당기[普高雲幢] 용왕， 덕차가 (德叉迦) 용왕， 끝없이 걷는[無邊步] 용왕， 조촐한 빛[淸淨色] 용왕， 널리 운전하는 큰소리[普運大聲] 용왕， 뜨거운 번뇌 없는[無熱惱] 용왕 들이었다. 이런 이들이 우두머리가 되어 그 수가 한량이 없는데， 모두 부지런히 노력하여 구름을 일으키고 비를 내려 모든 중생들로 하여금 번뇌를 소멸하게 하는 이들이었다. 復有無量諸大龍王，所謂：毘樓博叉龍王，娑竭羅龍王、雲音妙幢龍王、焰口海光龍王、普高雲幢龍王、德叉迦龍王、無邊步龍王、淸淨色龍王、普運大聲龍王、無熱惱龍王……。如是等而爲上首，其數無量，莫不勤力興雲布雨，令諸衆生熱惱消滅。",
+    "또 한량없는 구반다왕(鳩槃茶王)이 있었으니， 이른바 증장[增長] 구반다왕， 용의 임금[龍王] 구반다왕， 장엄 당기[善莊嚴幢] 구반다왕， 널리 이익 주는 행[普饒益行] 구반다왕， 엄청나게 무서운[甚可怖畏] 구반다왕， 고운 눈 단정한[美目端嚴] 구반다왕， 높은 봉우리 지혜[高峯慧] 구반다왕， 용맹한 팔[勇健臂] 구반다왕， 끝없이 조촐한 꽃 눈[無邊淨華眼] 구반다왕， 넓고 큰 하늘 얼굴 아수라눈[廣大天面阿脩羅眼] 구반다왕 들이었다. 이런 이들이 우두머리가 되어 그 수가 한량이 없는데， 모두 걸림 없는 법문을 부지런히 닦아 큰 광명을 놓는 이들이었다. 復有無量鳩槃荼王，所謂：增長鳩槃荼王、龍主鳩槃荼王、善莊嚴幢鳩槃荼王、普饒益行鳩槃荼王、甚可怖畏鳩槃荼王、美目端嚴鳩槃荼王、高峯慧鳩槃荼王、勇健臂鳩槃荼王、無邊淨華眼鳩槃荼王、廣大天面阿脩羅眼鳩槃荼王……。如是等而爲上首，其數無量，皆勤修學無礙法門，放大光明。",
+    "또 한량없는 건달바왕(乾闥婆王)이 있으니， 이른바 지국[持國] 건달바왕， 나무 광명[樹光] 건달바왕， 깨끗한 눈[淨目] 건달바왕， 꽃갓 쓴[華冠] 건달바왕， 넓은 음성[普音] 건달바왕， 묘한 눈 잘 놀리는[樂搖動妙目乾] 건달바왕， 묘한 음성 사자 당기[妙音師子幢] 건달바왕， 보배 광명 널리 놓는[普放寶光明] 건달바왕， 금강나무 꽃 당기[金剛樹華幢] 건달바왕， 두루 장엄 나타내기 좋아하는[樂普現莊嚴] 건달바왕 들이었다. 이런 이들이 우두머리가 되어 그 수가 한량없는데， 모두 큰 법에 깊은 신심을 내고 환희하고 존중하며， 부지런히 닦고 게으르지 않은 이들이었다. 復有無量乾闥婆王，所謂：持國乾闥婆王、樹光乾闥婆王、淨目乾闥婆王、華冠乾闥婆王、普音乾闥婆王、樂搖動妙目乾闥婆王、妙音師子幢乾闥婆王、普放寶光明乾闥婆王、金剛樹華幢乾闥婆王、樂普現莊嚴乾闥婆王……。如是等而爲上首，其數無量，皆於大法，深生信解，歡喜愛重，勤修不倦。",
+    "또 한량없는 월천자(月天子)가 있었으니， 이른바 월[月] 천자， 꽃왕 상투 광명[華王髻光明] 천자， 여러 가지 묘하고 깨끗한 광명[衆妙淨光明] 천자， 안락한 세간 마음[安樂世間心] 천자， 나무왕 눈 광명[樹王眼光明] 천자， 조촐한 빛 나타내는[示現淸淨光] 천자， 두루 다녀 동하지 않는 빛[普遊不動光] 천자， 별 임금 자재한[星宿王自在] 천자， 깨끗이 깬 달[淨覺月] 천자， 큰 위덕 광명[大威德光明] 천자 들이었다. 이런 이들이 우두머리가 되어 그 수가 한량없는데， 모두 부지런히 중생의 마음 보배를 드러내는 이들이었다. 復有無量月天子，所謂月天子：華王髻光明天子、衆妙淨光明天子、安樂世閒心天子、樹王眼光明天子、示現淸淨光天子、普遊不動光天子、星宿王自在天子、淨覺月天子、大威德光明天子……。如是等而爲上首，其數無量，皆勤顯發衆生心寶。"
+  ],
+  [
+    "또 한량없는 일천자(日天子)가 있었으니， 이른바 일[日] 천자， 빛난 불꽃 눈[覺焰眼] 천자， 수미산 빛 두렵고 공경할 당기[須彌光可畏敬幢] 천자， 때 없는 보배 장엄[離垢寶莊嚴] 천자， 용맹하여 퇴전치 않는[勇猛不退轉] 천자， 묘한 꽃 영락 광명[妙華纓光明] 천자， 훌륭한 당기 광명[最勝幢光明] 천자， 보배 상투 넓은 광명[寶髻普光明] 천자， 빛난 눈[光明眼] 천자， 좋은 덕 지닌[持勝德] 천자， 넓은[普光明] 광명 천자 들이었다. 이런 이들이 우두머리가 되어 그 수가 한량이 없는데， 모두 부지런히 닦아 익혀 중생을 이롭게 하며 선근을 증장하게 하는 이들이었다. 復有無量日天子，所謂日天子：光焰眼天子、須彌光可畏敬幢天子、離垢寶莊嚴天子、勇猛不退轉天子、妙華纓光明天子、最勝幢光明天子、寶髻普光明天子、光明眼天子、持勝德天子、普光明天子……。如是等而爲上首，其數無量，皆勤修習，利益衆生，增其善根。",
+    "또 한량없는 삼십삼천왕(三十三天王)이 있었으니， 이른바 석가 인다라[釋迦因陀羅]천왕， 넓은 소문 가득한 음성[普稱滿音]천왕， 자비한 눈 보배 상투[慈目寶髻]천왕， 보배 빛 당기 이름[寶光幢名稱]천왕， 즐거움 내는 상투[發生喜樂髻]천왕， 사랑스런 바른 생각[可愛樂正念]천왕， 수미산 좋은 음성[須彌勝音]천왕， 성취한 생각[成就念]천왕， 사랑스런 깨끗한 꽃 빛[可愛樂淨華光]천왕， 지혜의 해눈[智日眼]천왕， 자재한 광명 잘 깨닫는[自在光明能覺悟]천왕 들이었다. 이런 이들이 우두머리가 되어 그 수가 한량없는데， 모두 온갖 세간의 넓고 큰 사업을 일으키는 이들이었다. 復有無量三十三天王，所謂：釋迦因陀羅天王、普稱滿音天王、慈目寶髻天王、寶光幢名稱天王、發生喜樂髻天王、可愛樂正念天王、須彌勝音天王、成就念天王可愛樂淨華光天王、智日眼天王、自在光明能覺悟天王……。如是等而爲上首，其數無量，皆勤發起一切世閒廣大之業。",
+    "또 한량없는 수야마천왕(須夜摩天王)이 있었으니， 이른바 선시분[善時分]천왕， 사랑스런 광명[可愛樂光明]천왕， 그지없는 지혜 공덕 당기[無盡慧功德幢]천왕， 변화 잘하고 단정한[善變化端嚴]천왕， 모두 지는 큰 광명[總持大光明]천왕， 헤아릴 수 없는 지혜[不思議智慧]천왕， 둥근 배꼽[輪齋]천왕， 빛난 불꽃[光焰]천왕， 광명 비치는[光照]천왕， 두루 살펴 소문난[普觀察大名稱]천왕 들이었다. 이런 이들이 우두머리가 되어 그 수가 한량이 없는데， 모두 넓고 큰 선근을 부지런히 닦아 마음이 항상 기쁘고 만족한 이들이었다. 復有無量須夜摩天王，所謂：善時分天王、可愛樂光明天王、無盡慧功德幢天王、善變化端嚴天王、摠持大光明天王、不思議智慧天王、輪臍天王光焰天王、光照天王、普觀察大名稱天王……。如是等而爲上首，其數無量，皆勤修習廣大善根，心常喜足。",
+    "또 헤아릴 수 없는 도솔타(兜率陀)천왕이 있었으니， 이른바 지족[知足]천왕， 즐거운 바다 상투[喜樂海髻]천왕， 가장 좋은 공덕 당기[最勝功德幢]천왕， 고요한 빛[寂靜光]천왕， 사랑스런 묘한 눈[可愛樂妙目]천왕， 보배 봉우리 조촐한 달[寶峯淨月]천왕， 가장 좋은 용맹한 힘[最勝勇健力]천왕， 금강 같이 묘한 광명[金剛妙光明]천왕， 별 장엄 당기[星宿莊嚴幢]천왕， 사랑스런 장엄[可愛樂莊嚴]천왕 들이었다. 이런 이들이 우두머리가 되어 헤아릴 수 없이 많은데， 모두 여러 부처님의 명호를 부지런히 기억하는 이들이었다. 復有不可思議數兜率陀天王，所謂：知足天王、喜樂海髻天王、最勝功德幢天王、寂靜光天王、可愛樂妙目天王、寶峯淨月天王、最勝勇健力天王、金剛妙光明天王、星宿莊嚴幢天王、可愛樂莊嚴天王……。如是等而爲上首，不思議數，皆勤念持一切諸佛所有名號。",
+    "또 한량없는 화락(化樂)천왕이 있었으니， 이른바 변화 잘하는[善變化]천왕， 고요한 음성 광명[寂靜音光明]천왕， 변화하는 힘 광명[變化力光明]천왕， 장엄 맡은[莊嚴主]천왕， 생각하는 빛[念光]천왕， 가장 높은 구름 소리[最上雲音]천왕， 묘하고 훌륭한 빛[衆妙最勝光]천왕， 묘한 상투 광명[妙髻光明]천왕， 기쁜 지혜 성취한[成就喜慧]천왕， 꽃 광명 상투[華光髻]천왕， 시방세계 두루 보는[普見十方]천왕 들이었다. 이런 이들이 우두머리가 되어 그 수가 한량없는데， 모든 중생을 부지런히 조복하여 해탈케 하는 이들이었다. 復有無量化樂天王，所謂：善變化天王、寂靜音光明天王、變化力光明天王、莊嚴主天王、念光天王、最上雲音天王、衆妙最勝光天王、妙髻光明天王、成就喜慧天王、華光髻天王、普見十方天王……。如是等而爲上首，其數無量，皆勤調伏一切衆生，令得解脫。",
+    "또 수없는 타화자재(他化自在)천왕이 있었으니， 이른바 득자재(得自在)천왕， 묘한 눈 차지[妙目主]천왕， 묘한 갓 당기[妙冠幢]천왕， 용맹한 지혜[勇猛慧]천왕， 묘한 음성 구절[妙音句]천왕， 묘한 빛 당기[妙光幢]천왕， 고요한 경계 문[寂靜境界門]천왕， 묘한 바퀴 장엄 당기[妙輪莊嚴幢]천왕， 꽃술 지혜 자재한[華蘂慧自在]천왕， 인다라 힘 묘한 장엄 광명[因陀羅力妙莊嚴光明]천왕 들이었다. 이런 이들이 우두머리가 되어 그 수가 한량없는데， 모두 자재한 방편과 넓고 큰 법문을 부지런히 닦아 익힌 이들이었다. 復有無數他化自在天王，所謂：得自在天王、妙目主天王、妙冠幢天王、勇猛慧天王、妙音句天王、妙光幢天王、寂靜境界門天王、妙輪莊嚴幢天王、華蕊慧自在天王、因陀羅力妙莊嚴光明天王……。如是等而爲上首，其數無量，皆勤修習自在方便廣大法門。",
+    "또 셀 수 없는 대범(大梵)천왕이 있었으니， 이른바 시기[尸棄]천왕， 지혜 광명[慧光]천왕， 좋은 지혜 광명[善慧光明]천왕， 넓은 구름 소리[普雲音]천왕， 세상 말을 자재하게 관찰하는[觀世言音自在]천왕， 고요한 광명 눈[寂靜光明眼]천왕， 시방에 광명 가득한[光遍十方]천왕， 변화하는 음성[變化音]천왕， 광명 찬란한 눈[光明照耀眼]천왕， 듣기 좋은 바다소리[悅意海音]천왕 들이었다. 이런 이들이 우두머리가 되어 수를 셀 수 없는데， 모두 큰 자비를 갖추고 중생을 가엾이 여기며 빛을 펴서 널리 비치어 쾌락을 얻게 하는 이들이었다. 復有不可數大梵天王，所謂：尸棄天王、慧光天王、善慧光明天王、普雲音天王、觀世言音自在天王、寂靜光明眼天王、光徧十方天王、變化音天王、光明照耀眼天王、悅意海音天王……。如是等而爲上首，不可稱數，皆具大慈，憐愍衆生，舒光普照，令其快樂。",
+    "또 한량없는 광음(光音)천왕이 있었으니， 이른바 사랑스런 광명[可愛樂光明]천왕， 조촐하고 묘한 빛[淸淨妙光]천왕， 자재하게 소리하는[能自在音]천왕， 가장 좋은 생각하는 지혜[最勝念智]천왕， 사랑스런 맑고 묘한 음성[可愛樂淸淨妙音]천왕， 잘 생각하는 음성[善思惟音]천왕， 넓은 음성 두루 비치는[普音遍照]천왕， 매우 깊은 빛 음성[甚深光音]천왕， 때 없는 이름 광명[無垢稱光明]천왕， 가장 좋은 조촐한 빛[最勝淨光]천왕 들이었다. 이런 이들이 우두머리가 되어 그 수가 한량없는데， 모두 넓고 크고 고요하고 즐겁고 걸림 없는 법문에 머문 이들이었다. 復有無量光音天王，所謂：可愛樂光明天王、淸淨妙光天王、能自在音天王、最勝念智天王、可愛樂淸淨妙音天王、善思惟音天王、普音徧照天王、甚深光音天王、無垢稱光明天王、最勝淨光天王……。如是等而爲上首，其數無量，皆住廣大寂靜喜樂無礙法門。"
+  ],
+  [
+    "또 한량없는 변정(遍淨)천왕이 있으니， 이른바 깨끗하게 이름난[淸淨名稱]천왕， 가장 좋은 소견[最勝見]천왕， 고요한 공덕[寂靜德]천왕， 수미산 음성[須彌音]천왕， 깨끗이 생각하는 눈[淨念眼]천왕， 사랑스런 좋은 빛 비치는[可愛樂最勝光照]천왕， 세간에 자재한 님[世間自在主]천왕， 빛난 불꽃 자재한[光焰自在]천왕， 법 생각하기 좋아하는 변화[樂思惟法變化]천왕， 변화하는 당기[變化幢]천왕， 별의 소리 묘한 장님[星宿音妙莊嚴]천왕 들이었다. 이런 이들이 우두머리가 되어 그 수가 한량없는데， 모두 광대한 법문에 머물러 있으면서 모든 세간에서 이익을 짓는 이들이었다. 復有無量徧淨天王，所謂：淸淨名稱天王、最勝見天王、寂靜德天王、須彌音天王、淨念眼天王、可愛樂最勝光照天王、世閒自在主天王、光焰自在天王、樂思惟法變化天王、變化幢天王、星宿音妙莊嚴天王……。如是等而爲上首，其數無量，悉已安住廣大法門，於諸世閒勤作利益。",
+    "또 한량없는 광과(廣果)천왕이 있었으니， 이른바 법을 사랑하는 광명 당기[愛樂法光明幢]천왕， 깨끗한 장엄 바다[淸淨莊嚴海]천왕， 가장 좋은 지혜 광명[最勝慧光明]천왕， 자재한 지혜 당기[自在智慧幢]천왕， 고요한 것 좋아하는[樂寂靜]천왕， 넓은 지혜 눈[普智眼]천왕， 도는 지혜 좋아하는[樂旋慧]천왕， 선한 종자 지혜 광명[善種慧光明]천왕， 때 없고 고요한 빛[無垢寂靜光]천왕， 넓고 크고 깨끗한 광명[廣大淸淨光]천왕 들이었다. 이런 이들이 우두머리가 되어 그 수가 한량없는데， 모두 고요한 법으로 궁전을 삼고 그 가운데 편안히 있는 이들이었다. 復有無量廣果天王，所謂：愛樂法光明幢天王、淸淨莊嚴海天王、最勝慧光明天王、自在智慧幢天王、樂寂靜天王、普智眼天王、樂旋慧天王、善種慧光明天王、無垢寂靜光天王、廣大淸淨光天王……。如是等而爲上首，其數無量，莫不皆以寂靜之法而爲宮殿，安住其中。 『대방광불화엄경』 1권(ABC, K0080 v8, p.430a13)",
+    "1. 세주묘엄품 ② 世主妙嚴品第一之二",
+    "이때 여래의 도량에 바다 같은 대중이 구름처럼 모였는데， 그지없는 무리들이 두루 퍼져 가득하였다. 그 형상과 빛깔과 따라 온 무리들이 각각 다르며， 제각기 온 방위를 따라서 세존께 친근하고 한결같은 마음으로 우러렀다. 이렇게 모인 대중들은 모든 번뇌와 마음의 때와 남은 버릇[餘習]을 여의었고 무거운 업장(業障)의 산을 무너뜨리고 부처님을 보되 걸림이 없었다. 이런 이들은 다 비로자나여래께서 지난 옛적 많은 겁 동안 보살행을 닦을 적에 사섭사(四攝事)로써 거두어 주었으며， 부처님 계신 데서 선근을 심을 때마다 잘 거두어 주는 방편으로 교화하고 성숙하게 하여 온갖 지혜를 얻는 길에 서게 하였다. 한량없는 선근을 심어 여러 가지 복을 얻었고， 방편과 원력 바다에 들어가서 닦을 행이 구족하게 깨끗하여졌으며， 벗어나는 길에서 잘 뛰어났고， 항상 부처님을 분명하게 보았으며， 잘 이해하는 힘으로 여래의 큰 공덕 바다에 들어가 부처님의 해탈문을 얻어 마음대로 유희하는 일이 신통하였다. 爾時，如來道場衆海，悉已雲集；無邊品類，周帀徧滿；形色部從，各各差別；隨所來方，親近世尊，一心瞻仰。此諸衆會，已離一切煩惱心垢及其餘習，摧重障山，見佛無礙。如是皆以毘盧遮那如來往昔之時，於劫海中修菩薩行，以四攝事而曾攝受；一一佛所種善根時，皆已善攝種種方便，教化成熟，令其安立一切智道；種無量善，獲衆大福，悉已入於方便願海；所行之行，具足淸淨；於出離道，已能善出，常見於佛，分明照了；以勝解力入於如來功德大海，得於諸佛解脫之門遊戲神通。所謂：",
+    "묘한 불꽃 바다 대자재[妙焰海大自在]천왕은 법계(法界)와 허공계에 고요한 방편의 힘인 해탈문을 얻었고， 자재한 이름 빛[自在名稱光]천왕은 온갖 법을 두루 보고 모두 자재하는 해탈문을 얻었고， 깨끗한 공덕 눈[淸淨功德眼]천왕은 온갖 법이 나지도 않고 멸하지도 않고 오지도 않고 가지도 않고 작용이 없는 행인 해탈문을 얻었고， 사랑스런 큰 지혜[可愛樂大慧]천왕은 온갖 법의 진실한 모습을 뚜렷이 보는 지혜의 바다 해탈문을 얻었고 동하지 않는 빛 자재한[不動光自在]천왕은 중생들에게 끝없는 안락을 주는 큰 방편 선정 해탈문을 얻었다. 묘하게 장엄한 눈[妙莊嚴眼]천왕은 고요한 법을 보고 모든 어리석은 공포를 멸하는 해탈문을 얻었고， 생각 잘하는 광명[善思惟光明]천왕은 그지없는 경계에 잘 들어가 모든 유(有)에 대하여 생각하는 업을 일으키지 않는 해탈문을 얻었고， 사랑스런 큰 지혜[可愛樂大智]천왕은 시방으로 널리 다니면서 법을 말하되 흔들리지 않고 의지함이 없는 해탈문을 얻었고， 넓은 음성 장엄 당기[普者莊嚴幢]천왕은 부처님의 고요한 경계에 들어가서 광명을 널리 나타내는 해탈문을 얻었고， 끝까지 정진하는 이름 빛난[名稱光善精進]천왕은 자기의 깨달은 데에 머물러서 그지없이 넓고 큰 경계로 반연할 바를 삼는 해탈문을 얻었다. 妙焰海大自在天王，得法界、虛空界寂靜方便力解脫門；自在名稱光天王，得普觀一切法悉自在解脫門；淸淨功德眼天王，得知一切法不生、不滅、不來、不去、無功用行，解脫門；可愛樂大慧天王，得現見一切法眞實相，智慧海解脫門；不動光自在天王，得與衆生無邊安樂，大方便定解脫門；妙莊嚴眼天王，得令觀寂靜法滅諸癡暗怖解脫門；善思惟光明天王，得善入無邊境界不起一切諸有思惟業解脫門；可愛樂大智天王，得普往十方說法而不動無所依解脫門；普音莊嚴幢天王，得入佛寂靜境界普現光明解脫門；名稱光善精進天王，得住自所悟處而以無邊廣大境界爲所緣解脫門。",
+    "그때 묘한 불꽃 바다[妙焰海]천왕이 부처님의 위신력을 받들어 모든 자재천 무리들을 두루 살피고 게송으로 말하였다. 爾時，妙焰海天王，承佛威力，普觀一切自在天衆而說頌言：",
+    "부처님 몸 여러 회중 두루 계시고 온 법계에 가득하여 다함없으며 고요하고 성품 없어 못 잡건마는 세상을 구원하러 나타나셨네. 佛身普徧諸大會，  充滿法界無窮盡，  寂滅無性不可取，  爲救世閒而出現。",
+    "여래인 법왕(法王)께서 출세하시어 세상을 비춰 주는 등을 켜시니 그 경계 끝이 없고 다함 없음은 자재한 이름 천왕 증득하도다. 如來法王出世閒，  能然照世妙法燈，  境界無邊亦無盡，  此自在名之所證。"
+  ],
+  [
+    "부처님은 부사의라 분별이 없고 모든 모습 어디에나 없는 줄 알아 세간의 청정한 길 널리 여시니 깨끗한 공덕 눈이 밝게 보았네. 佛不思議離分別，  了相十方無所有，  爲世廣開淸淨道，  如是淨眼能觀見。",
+    "여래의 크신 지혜 끝이 없으며 모든 세상 사람들이 측량 못하나 중생들의 어둔 마음 아주 없애니 지혜천왕 이를 알고 깊이 머물고 如來智慧無邊際，  一切世閒莫能測，  永滅衆生癡暗心，  大慧入此深安住。",
+    "여래 공덕 헤아릴 수가 없지만 보는 중생들마다 번뇌 멸하고 여러 세상 사람들 안락 얻나니 동하잖는 자재천왕 능히 보시며 如來功德不思議，  衆生見者煩惱滅，  普使世閒獲安樂，  不動自在天能見。",
+    "중생은 어리석음 항상 덮이매 여래께서 고요한 법 말씀하시니 세상을 비춰주는 지혜 등이라 묘하게 장엄한 눈 이 방편 알고 衆生癡暗常迷覆，  如來爲說寂靜法，  是則照世智慧燈，  妙眼能知此方便。",
+    "여래의 청정하고 묘하신 몸매 시방에 나타나되 비길 이 없어 이 몸이 성품 없고 의지 없나니 잘 생각하는 광명천왕 관찰이니라. 如來淸淨妙色身，  普現十方無有比，  此身無性無依處，  善思惟天所觀察。",
+    "여래의 묘한 음성 걸림이 없어 교화를 받을 이가 모두 듣건만 부처님은 고요하여 동하잖나니 사랑스런 지혜천왕 해탈이로다. 如來音聲無限礙，  堪受化者靡不聞，  而佛寂然恒不動，  此樂智天之解脫。",
+    "고요히 해탈하신 천인(天人)의 주인 시방에 나타나지 않는 데 없어 찬란한 그 광명이 세간에 가득 이 법문은 장엄 당기천왕이 보고 寂靜解脫天人主，  十方無處不現前，  光明照耀滿世閒，  此無礙法嚴幢見。",
+    "부처님은 그지없는 겁 바다에서 중생들을 위하여 보리 구하고 갖가지 신통으로 여럿을 교화 이름 빛난 천왕이 이 법을 아네. 佛於無邊大劫海，  爲衆生故求菩提，  種種神通化一切，  名稱光天悟斯法。"
+  ],
+  [
+    "또 법을 사랑하는 광명 당기[可愛樂法光明幢] 천왕은 모든 중생의 근기를 널리 살피고 법을 말하여 의심을 끊게 하는 해탈문을 얻었고， 깨끗한 장엄 바다[淨莊嚴海] 천왕은 생각하는 대로 부처님을 보게 하는 해탈문을 얻었고， 가장 좋은 지혜 광명[最勝慧光明] 천왕은 법의 성품이 평등하여 의지할 데 없는 장엄한 몸 해탈문을 얻었고， 자재한 지혜 당기[自在智慧幢] 천왕은 모든 세간법을 분명하게 알고 잠깐 동안에 부사의한 장엄바다를 나란히 세우는 해탈문을 얻었고， 고요한 것 좋아하는[樂寂靜] 천왕은 한 털구멍 속에 부사의한 세계를 나타내되 걸림이 없는 해탈문을 얻었다. 넓은 지혜 눈[普智眼] 천왕은 넓은 문에 들어가서 법계를 관찰하는 해탈문을 얻었고， 도는 지혜 좋아하는[樂旋慧] 천왕은 모든 중생을 위하여 가지가지로 출현하되 끝 없는 겁에 항상 앞에 나타나는 해탈문을 얻었고， 선한 종자 지혜 광명[善種慧光明] 천왕은 온갖 세간의 경계를 관찰하여 부사의한 법에 들어가는 해탈문을 얻었고， 때 없고 고요한 빛[無垢寂靜光] 천왕은 모든 중생에게 벗어나는 요긴한 법을 보여주는 해탈문을 얻었고， 넓고 크고 깨끗한 광명[廣大淸淨光] 천왕은 교화를 받을 수 있는 온갖 중생을 관찰하여 부처님 법에 들어가게 하는 해탈문을 얻었다. 復次，可愛樂法光明幢天王，得普觀一切衆生根爲說法斷疑解脫門；淨莊嚴海天王，得隨憶念令見佛解脫門；最勝慧光明天王，得法性平等無所依莊嚴身解脫門；自在智慧幢天王，得了知一切世閒法一念中安立不思議莊嚴海解脫門；樂寂靜天王，得於一毛孔現不思議佛剎無障礙解脫門；普智眼天王，得入普門觀察法界解脫門；樂旋慧天王，得爲一切衆生種種出現無邊劫常現前解脫門；善種慧光明天王，得觀一切世閒境界入不思議法解脫門；無垢寂靜光天王，得示一切衆生出要法解脫門；廣大淸淨光天王，得觀察一切應化衆生令入佛法解脫門。",
+    "그때 법을 사랑하는 광명 당기 천왕이 부처님의 위신력을 받들어 모든 소광천(少廣天)ㆍ무량광천(無量廣天)ㆍ광과천(廣果天) 무리들을 두루 살피고 게송으로 말하였다. 爾時，可愛樂法光明幢天王，承佛威力，普觀一切少廣天、無量廣天、廣果天衆而說頌言：",
+    "부처님의 경계가 부사의하여 중생들이 헤아리기 어렵지마는 그 마음에 믿음을 내게 하시니 크고 넓은 즐거운 뜻 다함이 없네. 諸佛境界不思議，  一切衆生莫能測，  普令其心生信解，  廣大意樂無窮盡。",
+    "어느 중생 법문을 받을 만하면 부처님의 신통으로 그를 인도해 앞에 있는 부처님을 항상 보나니 장엄 바다 천왕이 이를 보았고 若有衆生堪受法，  佛威神力開導彼，  令其恒睹佛現前，  嚴海天王如是見。",
+    "모든 법의 성품이 의지가 없고 부처님의 태어남도 그와 같아서 온 세상에 의지할 곳이 없나니 좋은 지혜 광명 천왕 이를 보도다. 一切法性無所依，  佛現世閒亦如是，  普於諸有無依處，  此義勝智能觀察。",
+    "중생의 하고 싶은 마음을 따라 부처님의 신통으로 나타내는 일 가지각색 차별이 부사의함은 지혜 당기 천왕의 해탈이니라. 隨諸衆生心所欲，  佛神通力皆能現，  各各差別不思議，  此智幢王解脫海。",
+    "지난 세상 있었던 모든 국토를 한 털구멍 속에서 모두 보이니 이것은 부처님의 크오신 신통 고요한 것 좋아하는 천왕이 연설 過去所有諸國土，  一毛孔中皆示現，  此是諸佛大神通，  愛樂寂靜能宣說。",
+    "온갖 법문 그지없어 바다 같거늘 한 법문 도량 안에 모두 모이니 이러한 법의 성품 부처님 말씀 넓은 지혜 눈 천왕 이 방편 아네. 一切法門無盡海，  同會一法道場中，  如是法性佛所說，  智眼能明此方便。"
+  ],
+  [
+    "시방에 널려 있는 많은 국토에 그 가운데 두루하여 법문 말하나 부처님은 가고 오는 일이 없나니 도는 지혜 천왕의 깨달은 경계 十方所有諸國土，  悉在其中而說法，  佛身無去亦無來，  愛樂慧旋之境界。",
+    "세간법을 그림자와 같이 보시고 오묘하고 깊은 곳에 드시었으매 법의 성품 고요함을 연설하시니 선한 종자 광명 천왕 이를 보았네. 佛觀世法如光影，  入彼甚深幽奧處，  說諸法性常寂然，  善種思惟能見此。",
+    "부처님은 모든 경계 분명히 알고 중생의 근성 따라 법문 말하사 벗어나는 어려운 문 여시었나니 고요한 빛 천왕이 들어갔도다. 佛善了知諸境界，  隨衆生根雨法雨，  爲啓難思出要門，  此寂靜天能悟入。",
+    "세존께서 어느 때나 큰 자비로써 중생을 이익하려 출현하시고 평등하게 법비 내려 그릇 채우니 깨끗한 광명 천왕 연설하도다. 世尊恒以大慈悲，  利益衆生而出現，  等雨法雨充其器，  淸淨光天能演說。",
+    "또 깨끗하게 이름난[淸淨慧名稱] 천왕은 모든 중생의 해탈할 길을 통달하는 방편 해탈문을 얻었고， 가장 좋은 소견[最勝見] 천왕은 모든 하늘 무리의 좋아함을 따라서 그림자처럼 널리 나타나는 해탈문을 얻었고， 고요한 공덕[寂靜德] 천왕은 모든 부처님 경계를 깨끗이 장엄하는 큰 방편 해탈문을 얻었고， 수미산 음성[須彌音] 천왕은 중생들을 따라서 나고 죽는 바다에 길이 흘러 다니는 해탈문을 얻었고， 깨끗이 생각하는 눈[淨念眼] 천왕은 여래께서 중생을 조복하는 행을 기억하는 해탈문을 얻었다. 사랑스런 좋은 빛 비치는[可愛樂普照] 천왕은 넓은 문 다라니 바다에서 흘러 나오는 해탈문을 얻었고， 세간에 자재한 님[世間自在主] 천왕은 중생들로 하여금 부처님을 만나서 신심 광[藏]을 내게 하는 해탈문을 얻었고， 빛난 불꽃 자재한[光焰自在] 천왕은 모든 중생들로 하여금 법을 듣고 믿고 기뻐하여 뛰어나게 하는 해탈문을 얻었고，1) 법을 생각하기 좋아하는 변화[樂思惟法變化] 천왕은 온갖 보살의 조복하는 행이 허공처럼 끝이 없고 다함 없는 데 들어가는 해탈문을 얻었고， 변화하는 당기[變化幢] 천왕은 중생들의 한량없는 번뇌를 관찰하는 넓은 자비와 지혜의 해탈문을 얻었고， 별의 소리 묘한 장엄 천왕은 광명을 놓아 부처님의 삼륜(三輪)을 나타내어 붙들어 교화하는 해탈문을 얻었다. 復次，淸淨慧名稱天王，得了達一切衆生解脫道方便解脫門；最勝見天王，得隨一切諸天衆所樂如光影普示現解脫門；寂靜德天王，得普嚴淨一切佛境界大方便解脫門；須彌音天王，得隨諸衆生永流轉生死海解脫門；淨念眼天王，得憶念如來調伏衆生行解脫門；可愛樂普照天王，得普門陀羅尼海所流出解脫門；世閒自在主天王，得能令衆生値佛生信藏解脫門；光焰自在天王，得能令一切衆生聞法信喜而出離解脫門；樂思惟法變化天王，得入一切菩薩調伏行如虛空無邊無盡解脫門；變化幢天王，得觀衆生無量煩惱普悲智解脫門。",
+    "그때 깨끗하게 이름난[淨淨慧名] 천왕이 부처님의 위신력을 받들어 온갖 소정천(少淨天)ㆍ무량정천(無量淨天)ㆍ변정천(遍淨天) 무리들을 두루 살피고 게송으로 말하였다. 爾時，淸淨慧名稱天王，承佛威力，普觀一切少淨天，無量淨天，徧淨天衆，而說頌言：",
+    "법의 성품 걸림없음 아시는 이가 한량없는 시방세계 두루 나타나 부사의한 부처 경계 말씀하여서 중생들 해탈 바다 가게 하도다. 了知法性無礙者，  普現十方無量剎，  說佛境界不思議，  令衆同歸解脫海。",
+    "여래가 세상에서 의지 없음이 그림자가 여러 세계 나타나듯이 법의 성품 필경까지 생김 없나니 가장 좋은 소견 천왕 들으신 해탈 如來處世無所依，  譬如光影現衆國，  法性究竟無生起，  此勝見王所入門。"
+  ]
+];
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// SUPABASE 설정
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+const SUPABASE_URL = 'https://uqbayjuiprpawupwyhxf.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_FhOIkS0lGA_a1U6prWk4Nw_zq-AXcpy';
+
+async function sbFetch(path, options={}) {
+  const res = await fetch(SUPABASE_URL + '/rest/v1/' + path, {
+    headers: {
+      'apikey': SUPABASE_KEY,
+      'Authorization': 'Bearer ' + SUPABASE_KEY,
+      'Content-Type': 'application/json',
+      'Prefer': options.prefer || 'return=representation',
+      ...options.headers
+    },
+    ...options
+  });
+  if(!res.ok) { const e = await res.text(); console.error('Supabase error:', e); return null; }
+  const text = await res.text();
+  return text ? JSON.parse(text) : null;
+}
+
+// 게시물 불러오기
+async function loadPosts(tab) {
+  const data = await sbFetch(`posts?tab=eq.${tab}&order=sort_order.asc,created_at.desc`);
+  return data || [];
+}
+
+// 게시판 이름 설정
+let TAB_NAMES = ['','경전이야기','오늘의명상','일일게송','생활정보&문화탐방기','라비출판사'];
+
+async function loadTabNames() {
+  const data = await sbFetch('settings?key=like.tab*&order=key.asc');
+  if(data && data.length) {
+    data.forEach(row => {
+      const idx = parseInt(row.key.replace('tab',''));
+      if(idx >= 1 && idx <= 5) TAB_NAMES[idx] = row.value;
+    });
+  }
+  applyTabNames();
+  renderTabNameList();
+}
+
+function applyTabNames() {
+  // 페이지 제목
+  const icons = ['','📖','🧘','📿','🏡','📚'];
+  for(let i=1;i<=5;i++) {
+    const title = document.querySelector(`#p${i} .page-title`);
+    if(title) title.textContent = icons[i]+' '+TAB_NAMES[i];
+    const bniLbl = document.querySelector(`.bni[onclick*="goPage(${i}"] .bni-lbl`);
+    if(bniLbl) bniLbl.textContent = TAB_NAMES[i];
+    // 관리자 게시판 선택 버튼
+    const admBtn = document.querySelector(`.adm-tab-opt[data-board="${i}"]`);
+    if(admBtn) admBtn.textContent = TAB_NAMES[i];
+  }
+}
+
+async function saveTabName(idx, name) {
+  if(!name) { showToast('이름을 입력해 주세요!'); return; }
+  const res = await fetch(SUPABASE_URL + `/rest/v1/settings?key=eq.tab${idx}`, {
+    method: 'PATCH',
+    headers: {
+      'apikey': SUPABASE_KEY,
+      'Authorization': 'Bearer ' + SUPABASE_KEY,
+      'Content-Type': 'application/json',
+      'Prefer': 'return=minimal'
+    },
+    body: JSON.stringify({value: name})
+  });
+  if(res.ok) {
+    TAB_NAMES[idx] = name;
+    applyTabNames();
+    showToast(`게시판 ${idx} 이름이 "${name}"으로 변경됐습니다 ✅`);
+  } else {
+    const e = await res.text();
+    console.error('saveTabName error:', e);
+    showToast('저장 실패 😢 다시 시도해 주세요');
+  }
+}
+
+// 게시물 저장
+async function savePost_sb(post) {
+  return await sbFetch('posts', {
+    method: 'POST',
+    prefer: 'return=representation',
+    body: JSON.stringify(post)
+  });
+}
+
+// 게시물 수정
+async function updatePost_sb(id, data) {
+  return await sbFetch(`posts?id=eq.${id}`, {
+    method: 'PATCH',
+    prefer: 'return=representation',
+    body: JSON.stringify(data)
+  });
+}
+
+// 게시물 삭제
+async function deletePost_sb(id) {
+  return await sbFetch(`posts?id=eq.${id}`, {
+    method: 'DELETE',
+    prefer: 'return=minimal'
+  });
+}
+
+// 맨위로 (sort_order 0으로 변경, 나머지 +1)
+async function moveTop_sb(id, tab) {
+  // 현재 최소 sort_order 가져오기
+  const posts = await loadPosts(tab);
+  const minOrder = posts.length > 0 ? Math.min(...posts.map(p=>p.sort_order||0)) : 0;
+  return await updatePost_sb(id, {sort_order: minOrder - 1});
+}
+
+// 비밀번호 확인 (서버에서)
+async function checkPw_sb(pw) {
+  const data = await sbFetch(`admin?select=password`);
+  if(!data || data.length === 0) return false;
+  return data[0].password === pw;
+}
+
+// 비밀번호 변경 (서버에서)
+async function changePw_sb(newPw) {
+  return await sbFetch(`admin?id=eq.1`, {
+    method: 'PATCH',
+    prefer: 'return=minimal',
+    body: JSON.stringify({password: newPw})
+  });
+}
+
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// 게시판 렌더링 (Supabase)
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+async function renderBoard(tab) {
+  const el = document.getElementById('board'+tab);
+  if(!el) return;
+  el.innerHTML = '<div class="empty-board"><div class="empty-icon">🪷</div><div class="empty-txt">불러오는 중...</div></div>';
+  const posts = await loadPosts(tab);
+  if(posts.length === 0) {
+    el.innerHTML = `<div class="empty-board"><div class="empty-icon">🪷</div><div class="empty-txt">아직 게시물이 없습니다.<br>관리자 메뉴에서 등록해 주세요.</div></div>`;
+    return;
+  }
+  el.innerHTML = posts.map((p,i) => buildCard(p, i, tab)).join('');
+}
+
+function buildCard(p, idx, tab) {
+  const isAdmin = window._adminOpen || false;
+  const pid = p.id;
+  const dateStr = p.created_at ? new Date(p.created_at).toLocaleDateString('ko-KR') : (p.date||'');
+
+  // 썸네일 (작게 왼쪽)
+  let thumb = '';
+  if(p.ytid) {
+    thumb = `<img class="card-thumb" src="https://img.youtube.com/vi/${p.ytid}/mqdefault.jpg" alt="썸네일" loading="lazy" onclick="openFullPost(${pid},${tab})">`;
+  } else if(p.imgurl) {
+    thumb = `<img class="card-thumb" src="${p.imgurl}" alt="이미지" loading="lazy" onclick="openFullPost(${pid},${tab})">`;
+  }
+
+  // 관리자 버튼
+  const actions = isAdmin ? `<div class="post-actions">
+    <button class="post-act-btn" onclick="movePostTop(${pid},${tab})">⬆ 맨위로</button>
+    <button class="post-act-btn" onclick="openEditModal(${pid},${tab})">✏️ 수정</button>
+    <button class="post-act-btn del" onclick="deletePost(${pid},${tab})">🗑 삭제</button>
+  </div>` : '';
+
+  return `<div class="post-card" id="pcard-${tab}-${pid}">
+    <div class="post-card-row" onclick="openFullPost(${pid},${tab})">
+      ${thumb ? `<div class="card-thumb-wrap">${thumb}</div>` : ''}
+      <div class="card-text-wrap">
+        <div class="post-tag-row"><span class="post-tag">${escHtml(p.tag||'게시글')}</span><span class="post-date">${dateStr}</span></div>
+        <div class="post-title">${escHtml(p.title)}</div>
+        ${p.body ? `<div class="post-body-preview">${escHtml(p.body.substring(0,60))}${p.body.length>60?'...':''}</div>` : ''}
+      </div>
+    </div>
+    ${actions}
+  </div>`;
+}
+
+// 전체보기 모달
+function openFullPost(id, tab) {
+  // 현재 탭 게시물에서 찾기
+  const card = document.getElementById('pcard-'+tab+'-'+id);
+  if(!card) return;
+  // 풀포스트 모달 열기
+  const modal = document.getElementById('fullPostModal');
+  const title = card.querySelector('.post-title')?.textContent || '';
+  const body = card.querySelector('.post-body-preview')?.textContent || '';
+  const thumb = card.querySelector('.card-thumb');
+  const date = card.querySelector('.post-date')?.textContent || '';
+  const tag = card.querySelector('.post-tag')?.textContent || '';
+
+  document.getElementById('fp-tag').textContent = tag;
+  document.getElementById('fp-date').textContent = date;
+  document.getElementById('fp-title').textContent = title;
+  document.getElementById('fp-body').textContent = body;
+
+  // 미디어
+  const mediaEl = document.getElementById('fp-media');
+  mediaEl.innerHTML = '';
+  if(thumb) {
+    const src = thumb.src;
+    // 유튜브인지 확인
+    const ytMatch = src.match(/vi\/([^/]+)\//);
+    if(ytMatch) {
+      mediaEl.innerHTML = `
+        <div class="post-yt-thumb" onclick="toggleFpYt(this,'${ytMatch[1]}')">
+          <img src="${src}" style="width:100%;display:block;aspect-ratio:16/9;object-fit:cover">
+          <div class="yt-overlay"><div class="yt-play-ico">▶</div></div>
+        </div>
+        <div class="fp-yt-embed" id="fp-embed">
+          <iframe src="" data-src="https://www.youtube.com/embed/${ytMatch[1]}?autoplay=1" frameborder="0" allowfullscreen style="width:100%;height:200px;border:none;display:block"></iframe>
+        </div>
+        <a class="yt-open-link" href="https://www.youtube.com/watch?v=${ytMatch[1]}" target="_blank">🔗 유튜브에서 보기</a>`;
+    } else {
+      mediaEl.innerHTML = `<img src="${src}" style="width:100%;display:block;max-height:320px;object-fit:contain">`;
+    }
+  }
+  modal.classList.add('show');
+}
+function toggleFpYt(el, ytid) {
+  const embed = document.getElementById('fp-embed');
+  const show = !embed.classList.contains('show');
+  embed.classList.toggle('show', show);
+  const ifr = embed.querySelector('iframe');
+  if(show){ ifr.src = ifr.dataset.src; el.style.display='none'; }
+  else { ifr.src=''; el.style.display=''; }
+}
+function closeFullPost() {
+  document.getElementById('fullPostModal').classList.remove('show');
+  const ifr = document.querySelector('#fp-embed iframe');
+  if(ifr) ifr.src='';
+}
+
+function escHtml(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function toggleBodyById(key) {
+  const el = document.getElementById('pbody-'+key);
+  const btn = document.getElementById('pmore-'+key);
+  if(!el) return;
+  const collapsed = el.classList.contains('collapsed');
+  el.classList.toggle('collapsed', !collapsed);
+  btn.textContent = collapsed ? '접기 ▲' : '더보기 ▼';
+}
+
+function togglePostYt(thumbEl, ytid) {
+  const card = thumbEl.closest('.post-card');
+  const embedDiv = card.querySelector('.post-yt-embed');
+  const show = !embedDiv.classList.contains('show');
+  document.querySelectorAll('.post-yt-embed').forEach(e => {
+    e.classList.remove('show');
+    const ifr = e.querySelector('iframe'); if(ifr) ifr.src = '';
+  });
+  if(show) {
+    embedDiv.classList.add('show');
+    const ifr = embedDiv.querySelector('iframe');
+    if(ifr) ifr.src = ifr.dataset.src;
+    thumbEl.style.display = 'none';
+  } else {
+    thumbEl.style.display = '';
+  }
+}
+
+// 한 칸씩 위로
+async function movePostUp(id, tab) {
+  const posts = await loadPosts(tab);
+  // sort_order 기준 정렬, null이면 index로 보정
+  const sorted = posts.slice().sort((a,b)=>{
+    const ao = a.sort_order ?? 9999;
+    const bo = b.sort_order ?? 9999;
+    return ao - bo;
+  });
+  // sort_order가 없거나 중복인 경우 일괄 재설정
+  const needsReset = sorted.some((p,i) => p.sort_order == null || sorted.filter(x=>x.sort_order===p.sort_order).length > 1);
+  if(needsReset) {
+    for(let i=0;i<sorted.length;i++){
+      await updatePost_sb(sorted[i].id, {sort_order: i});
+      sorted[i].sort_order = i;
+    }
+  }
+  const idx = sorted.findIndex(p => p.id === id);
+  if(idx <= 0) { showToast('이미 맨 위예요!'); return; }
+  const cur = sorted[idx];
+  const above = sorted[idx-1];
+  await updatePost_sb(cur.id, {sort_order: above.sort_order});
+  await updatePost_sb(above.id, {sort_order: cur.sort_order});
+  await renderBoard(tab);
+  await renderAdminPostList(tab);
+  showToast('한 칸 위로 이동했습니다 ↑');
+}
+
+async function movePostTop(id, tab) {
+  showToast('맨 위로 이동 중...');
+  await moveTop_sb(id, tab);
+  await renderBoard(tab);
+  await renderAdminPostList(tab);
+  showToast('맨 위로 이동했습니다 ↑');
+}
+
+async function deletePost(id, tab) {
+  if(!confirm('이 게시물을 삭제하시겠습니까?')) return;
+  showToast('삭제 중...');
+  try {
+    await deletePost_sb(id);
+    await renderBoard(tab);
+    await renderAdminPostList(tab);
+    showToast('삭제되었습니다. ✅');
+  } catch(e) {
+    showToast('삭제 실패! 다시 시도해주세요.');
+    console.error(e);
+  }
+}
+
+// 맨위로 버튼
+function scrollTopPage(scrollId, btnId) {
+  const el = document.getElementById(scrollId);
+  if(el) el.scrollTop = 0;
+}
+function setupScrollTop(pageId, btnId) {
+  const pg = document.getElementById(pageId);
+  const btn = document.getElementById(btnId);
+  if(!pg||!btn) return;
+  pg.addEventListener('scroll', () => {
+    btn.classList.toggle('show', pg.scrollTop > 30);
+  });
+}
+// 독송 스크롤 맨위로
+function setupSutraScrollTop() {
+  const sc = document.getElementById('sutraScroll');
+  const btn = document.getElementById('st0');
+  if(!sc||!btn) return;
+  sc.addEventListener('scroll', () => {
+    btn.classList.toggle('show', sc.scrollTop > 30);
+  });
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// NAVIGATION
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// ━━━ 뱃지 ━━━
+async function updateBadges() {
+  for(let i=1;i<=5;i++){
+    const posts = await loadPosts(i);
+    const cur = posts.length;
+    const seen = parseInt(localStorage.getItem(`rabi_seen_${i}`) || '0');
+    const badge = document.getElementById(`badge${i}`);
+    if(!badge) continue;
+    const newCount = Math.max(0, cur - seen);
+    if(newCount > 0){
+      badge.textContent = newCount > 99 ? '99+' : newCount;
+      badge.style.display = 'flex';
+    } else {
+      badge.style.display = 'none';
+    }
+  }
+}
+
+function clearBadge(tab) {
+  loadPosts(tab).then(posts => {
+    localStorage.setItem(`rabi_seen_${tab}`, posts.length);
+    const badge = document.getElementById(`badge${tab}`);
+    if(badge) badge.style.display = 'none';
+  });
+}
+
+function goPage(n, el) {
+  stopScroll();
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('p'+n).classList.add('active');
+  document.querySelectorAll('.bni').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  if(n===0) updateProg();
+  if(n>=1 && n<=5) clearBadge(n);
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// SUTRA ENGINE
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+const chels = {hm:[],ko:[],dual:[]};
+function buildSutra() {
+  const nav=document.getElementById('chnav');
+  const bHm=document.getElementById('sp-hm');
+  const bKo=document.getElementById('sp-ko');
+  const bDual=document.getElementById('sp-dual');
+  if(nav) nav.innerHTML='';
+  if(bHm) bHm.innerHTML='';
+  if(bKo) bKo.innerHTML='';
+  if(bDual) bDual.innerHTML='';
+  chels.hm=[]; chels.ko=[]; chels.dual=[];
+
+  CHS.forEach((ch,i)=>{
+    // Nav button
+    const btn=document.createElement('button');
+    btn.className='chbtn'+(i===0?' active':'');
+    btn.textContent=ch.n;
+    btn.onclick=()=>goChapter(i,btn);
+    if(nav) nav.appendChild(btn);
+
+    // Text section (ko only)
+    const sec=document.createElement('div');
+    sec.dataset.ch=i;
+    const hdr=document.createElement('div');hdr.className='sec-hdr';
+    hdr.innerHTML=`<div class="sec-num">${ch.n}</div><div class="sec-name">${ch.nm}</div><div class="sec-ko">${ch.ko}</div>`;
+    sec.appendChild(hdr);
+    const arr=KO[i]||[];
+    arr.forEach(txt=>{
+      const p=document.createElement('p');
+      p.className='sp ko';
+      p.textContent=txt;
+      sec.appendChild(p);
+    });
+    if(bKo) bKo.appendChild(sec);
+    chels.ko.push(sec);
+  });
+}
+
+let scrolling=false,scrollTimer=null,resumeTimer=null,curTab='ko',fontSize=16;
+let readCnt=parseInt(localStorage.getItem('rabi_cnt')||'0');
+let opts={resume:true,notify:true,wake:false};
+let wl=null;
+document.getElementById('cntN').textContent=readCnt;
+
+function getScroll(){return document.getElementById('sutraScroll')}
+function toggleScroll(){scrolling?stopScroll():startScroll()}
+function startScroll(){
+  scrolling=true;
+  document.getElementById('playBtn').classList.add('playing');
+  document.getElementById('playIco').textContent='⏸';
+  document.getElementById('playLbl').textContent='일시정지';
+  document.getElementById('sdot').classList.add('on');
+  startTimer();
+  if(opts.wake&&'wakeLock' in navigator)navigator.wakeLock.request('screen').then(w=>{wl=w}).catch(()=>{});
+}
+function stopScroll(){
+  scrolling=false;clearInterval(scrollTimer);
+  document.getElementById('playBtn').classList.remove('playing');
+  document.getElementById('playIco').textContent='▶';
+  document.getElementById('playLbl').textContent='자동 슬랩';
+  document.getElementById('sdot').classList.remove('on');
+  if(wl){wl.release();wl=null;}
+}
+function startTimer(){
+  const spd=parseFloat(document.getElementById('spSlider').value)*1.2;
+  scrollTimer=setInterval(()=>{
+    const ta=getScroll();ta.scrollTop+=spd;
+    if(ta.scrollTop+ta.clientHeight>=ta.scrollHeight-4){stopScroll();if(opts.notify)showToast('독송을 마쳤습니다 🙏 완료(✓)를 눌러 기록하세요');}
+  },30);
+}
+function updSpd(v){document.getElementById('spdVal').textContent=v;if(scrolling){clearInterval(scrollTimer);startTimer();}}
+function onSScroll(){
+  updateProg();updateActiveCh();
+  if(scrolling){clearInterval(scrollTimer);clearTimeout(resumeTimer);if(opts.resume)resumeTimer=setTimeout(()=>{if(scrolling)startTimer();},1000);}
+}
+function resetScroll(){stopScroll();getScroll().scrollTop=0;updateProg();document.querySelectorAll('.chbtn').forEach((b,i)=>{b.classList.toggle('active',i===0);});}
+function updateProg(){
+  const ta=getScroll();
+  const pct=ta.scrollHeight<=ta.clientHeight?0:(ta.scrollTop/(ta.scrollHeight-ta.clientHeight))*100;
+  document.getElementById('progFill').style.width=Math.round(pct)+'%';
+  const cur=Math.min(32,Math.floor(pct/100*32)+1);
+  document.getElementById('progTxt').textContent=cur+'/'+CHS.length+'절';
+}
+function updateActiveCh(){
+  const ta=getScroll();const els=chels[curTab];let ai=0;
+  els.forEach((el,i)=>{if(el.offsetTop-ta.scrollTop<=80)ai=i;});
+  document.querySelectorAll('.chbtn').forEach((b,i)=>b.classList.toggle('active',i===ai));
+}
+function goChapter(idx,btn){
+  stopScroll();
+  document.querySelectorAll('.chbtn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const el=chels[curTab][idx];
+  if(el)getScroll().scrollTop=el.offsetTop-10;
+  updateProg();
+}
+function sTab(t,el){
+  curTab=t;
+  document.querySelectorAll('.stab').forEach(s=>s.classList.remove('active'));el.classList.add('active');
+  document.querySelectorAll('.spage').forEach(p=>p.classList.remove('active'));
+  document.getElementById('sp-'+t).classList.add('active');
+  getScroll().scrollTop=0;updateProg();
+}
+function chFont(d){fontSize=Math.min(22,Math.max(13,fontSize+d));document.querySelectorAll('.sbody').forEach(b=>b.style.fontSize=fontSize+'px');}
+function markDone(){
+  readCnt++;localStorage.setItem('rabi_cnt',readCnt);
+  document.getElementById('cntN').textContent=readCnt;
+  showToast('독송 완료! 🙏 ('+readCnt+'회)');
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// SETTINGS
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function openSett(){document.getElementById('settPane').classList.add('show');}
+function closeSett(e){if(!e||e.target===document.getElementById('settPane'))document.getElementById('settPane').classList.remove('show');}
+function togOpt(k,el){opts[k]=!opts[k];el.classList.toggle('on',opts[k]);}
+function resetCnt(){readCnt=0;localStorage.setItem('rabi_cnt',0);document.getElementById('cntN').textContent=0;closeSett();showToast('독송 횟수가 초기화되었습니다.');}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// TOAST
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// TIME
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function updTime(){const n=new Date();document.getElementById('timeDisp').textContent=n.getHours().toString().padStart(2,'0')+':'+n.getMinutes().toString().padStart(2,'0');}
+updTime();setInterval(updTime,30000);
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// 관리자
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+window._adminOpen = false;
+let _admBoard = 1;
+
+function openLock(){
+  document.getElementById('adminLock').style.display='flex';
+  document.getElementById('lockInput').value='';
+  document.getElementById('lockErr').textContent='';
+}
+function closeLock(){ document.getElementById('adminLock').style.display='none'; }
+async function checkPw(){
+  const pw=document.getElementById('lockInput').value;
+  const ok = await checkPw_sb(pw);
+  if(ok){closeLock();openAdmin();}
+  else{document.getElementById('lockErr').textContent='비밀번호 오류';document.getElementById('lockInput').value='';}
+}
+function renderTabNameList() {
+  for(let i=1;i<=5;i++){
+    const el = document.getElementById(`tabname-${i}`);
+    if(el) el.value = TAB_NAMES[i] || '';
+  }
+}
+
+function openAdmin(){
+  window._adminOpen=true;
+  _admBoard=1;
+  [1,2,3,4,5].forEach(i=>renderBoard(i));
+  const panel = document.getElementById('adminPanel');
+  panel.style.display='flex';
+  document.querySelectorAll('.adm-sec-body').forEach(b => b.classList.remove('open'));
+  const first = panel.querySelector('.adm-sec-body');
+  if(first) first.classList.add('open');
+  document.querySelectorAll('[data-board]').forEach(b=>b.classList.remove('sel'));
+  const firstBoard = document.querySelector('[data-board="1"]');
+  if(firstBoard) firstBoard.classList.add('sel');
+  renderAdminPostList(1);
+  loadTabNames();
+  // 커스텀 스크롤바 초기화
+  const body = document.getElementById('admBody');
+  if(body) { body._scrollBound = false; body.scrollTop = 0; }
+  setupAdmScrollTop();
+}
+function closeAdmin(){
+  window._adminOpen=false;
+  [1,2,3,4,5].forEach(i=>renderBoard(i));
+  document.getElementById('adminPanel').style.display='none';
+  const btn = document.getElementById('admScrollTop');
+  if(btn) btn.style.display='none';
+  const track = document.getElementById('admScrollTrack');
+  if(track) track.style.opacity='0';
+}
+
+// 관리자 패널 맨위로 + 커스텀 스크롤바
+function admScrollToTop() {
+  const body = document.getElementById('admBody');
+  if(body) body.scrollTo({top:0, behavior:'smooth'});
+}
+
+function setupAdmScrollTop() {
+  const body   = document.getElementById('admBody');
+  const btn    = document.getElementById('admScrollTop');
+  const track  = document.getElementById('admScrollTrack');
+  const thumb  = document.getElementById('admScrollThumb');
+  if(!body) return;
+  if(body._scrollBound) return;
+  body._scrollBound = true;
+
+  function updateUI() {
+    const scrollTop    = body.scrollTop;
+    const scrollHeight = body.scrollHeight;
+    const clientHeight = body.clientHeight;
+    const canScroll    = scrollHeight > clientHeight + 10;
+
+    // 맨위로 버튼
+    if(btn) btn.style.display = (scrollTop > 80) ? 'flex' : 'none';
+
+    // 커스텀 스크롤바
+    if(track && thumb && canScroll) {
+      track.style.opacity = '1';
+      const trackH = clientHeight - 8;
+      const thumbH = Math.max(36, trackH * (clientHeight / scrollHeight));
+      const thumbTop = (scrollTop / (scrollHeight - clientHeight)) * (trackH - thumbH);
+      thumb.style.height = thumbH + 'px';
+      thumb.style.top    = thumbTop + 'px';
+    } else if(track) {
+      track.style.opacity = '0';
+    }
+  }
+
+  body.addEventListener('scroll', updateUI, {passive:true});
+  // 내용이 바뀔 때도 갱신
+  if(window.ResizeObserver) {
+    new ResizeObserver(updateUI).observe(body);
+  }
+  // 패널 열릴 때 초기 갱신
+  setTimeout(updateUI, 100);
+}
+function toggleAdmSec(el){
+  const body = el.parentElement.querySelector('.adm-sec-body');
+  if(!body) return;
+  body.classList.toggle('open');
+}
+
+// 게시판 선택
+function selBoard(el){
+  document.querySelectorAll('[data-board]').forEach(b=>b.classList.remove('sel'));
+  el.classList.add('sel');
+  _admBoard=parseInt(el.dataset.board);
+  renderAdminPostList(_admBoard);
+}
+
+// 게시물 등록 (Supabase)
+async function submitPost(){
+  const title=document.getElementById('post-title').value.trim();
+  if(!title){showToast('제목을 입력하세요');return;}
+  const body=document.getElementById('post-body').value.trim();
+  const ytid=document.getElementById('post-ytid').value.trim();
+  const imgurl=document.getElementById('post-imgurl').value.trim();
+  const fileInput=document.getElementById('post-imgfile');
+  const tabNames = TAB_NAMES;
+  const currentBoard = _admBoard; // ← 현재 선택된 게시판 캡처!
+  console.log('등록 게시판:', currentBoard, tabNames[currentBoard]);
+
+  async function saveAndRender(imgData){
+    showToast('등록 중... ('+tabNames[currentBoard]+')');
+    const existing = await loadPosts(currentBoard);
+    const maxOrder = existing.length > 0 ? Math.min(...existing.map(p=>p.sort_order||0)) : 0;
+    await savePost_sb({
+      tab: currentBoard,
+      title, body, ytid,
+      imgurl: imgData||imgurl||'',
+      tag: tabNames[currentBoard],
+      sort_order: maxOrder - 1
+    });
+    await renderBoard(currentBoard);
+    await renderAdminPostList(currentBoard);
+    document.getElementById('post-title').value='';
+    document.getElementById('post-body').value='';
+    document.getElementById('post-ytid').value='';
+    document.getElementById('post-imgurl').value='';
+    fileInput.value='';
+    const pv=document.getElementById('yt-preview');
+    if(pv) pv.style.display='none';
+    showToast(tabNames[currentBoard]+'에 등록되었습니다 ✅');
+  }
+
+  if(fileInput.files&&fileInput.files[0]){
+    const reader=new FileReader();
+    reader.onload=e=>saveAndRender(e.target.result);
+    reader.readAsDataURL(fileInput.files[0]);
+  } else {
+    await saveAndRender('');
+  }
+}
+
+// 유튜브 URL → ID 자동 추출 + 썸네일 미리보기
+function extractYtId(inputEl) {
+  let val = inputEl.value.trim();
+  // 전체 URL에서 ID 추출
+  const patterns = [
+    /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/shorts\/)([A-Za-z0-9_-]{11})/,
+    /^([A-Za-z0-9_-]{11})$/  // 이미 ID만 입력한 경우
+  ];
+  let id = '';
+  for (const p of patterns) {
+    const m = val.match(p);
+    if (m) { id = m[1]; break; }
+  }
+  if (id) {
+    inputEl.value = id;  // 입력창을 ID만 남기도록
+    // 미리보기 표시
+    const isEdit = inputEl.id === 'edit-ytid';
+    const previewDiv = document.getElementById(isEdit ? 'edit-yt-preview' : 'yt-preview');
+    const previewImg = document.getElementById(isEdit ? 'edit-yt-preview-img' : 'yt-preview-img');
+    if (previewDiv && previewImg) {
+      previewImg.src = `https://img.youtube.com/vi/${id}/mqdefault.jpg`;
+      previewDiv.style.display = 'block';
+    }
+  } else {
+    // ID 없으면 미리보기 숨기기
+    const isEdit = inputEl.id === 'edit-ytid';
+    const previewDiv = document.getElementById(isEdit ? 'edit-yt-preview' : 'yt-preview');
+    if (previewDiv) previewDiv.style.display = 'none';
+  }
+}
+
+// 관리자 게시물 목록 렌더
+async function renderAdminPostList(tab) {
+  const el = document.getElementById('adm-post-list');
+  if(!el) return;
+  const posts = await loadPosts(tab);
+  if(posts.length === 0) {
+    el.innerHTML = '<div style="padding:10px 0;font-size:12px;color:var(--text4)">등록된 게시물이 없습니다.</div>';
+    return;
+  }
+  // sort_order 오름차순 (낮을수록 상단 노출)
+  const sorted = posts.slice().sort((a,b)=>(a.sort_order||0)-(b.sort_order||0));
+  el.innerHTML = '<div style="font-size:11px;color:var(--text3);margin-bottom:8px;letter-spacing:1px">📋 등록된 게시물 (표시 순서)</div>' +
+    sorted.map((p,i) => `<div class="adm-item">
+      <div class="adm-item-rank">${i+1}</div>
+      <div class="adm-item-text">${p.title}</div>
+      <button class="adm-edit-btn adm-up-btn" onclick="movePostUp(${p.id},${tab})" title="한칸위로" ${i===0?'disabled':''}>⬆</button>
+      <button class="adm-edit-btn" onclick="openEditModal(${p.id},${tab})">수정</button>
+      <button class="adm-del-btn" onclick="deletePost(${p.id},${tab})">삭제</button>
+    </div>`).join('');
+}
+
+// 비밀번호 변경 (Supabase)
+async function changePw(){
+  const cur=document.getElementById('pw-cur').value;
+  const nw=document.getElementById('pw-new').value;
+  const nw2=document.getElementById('pw-new2').value;
+  const ok = await checkPw_sb(cur);
+  if(!ok){showToast('현재 비밀번호가 틀렸습니다');return;}
+  if(!nw||nw.length<4){showToast('새 비밀번호는 4자 이상이어야 합니다');return;}
+  if(nw!==nw2){showToast('새 비밀번호가 일치하지 않습니다');return;}
+  await changePw_sb(nw);
+  document.getElementById('pw-cur').value='';
+  document.getElementById('pw-new').value='';
+  document.getElementById('pw-new2').value='';
+  showToast('비밀번호가 변경되었습니다 🔑');
+}
+
+// 수정 모달 (Supabase - 직접 조회)
+async function openEditModal(id, tab) {
+  document.getElementById('edit-idx').value = id;
+  document.getElementById('edit-tab').value = tab;
+  const data = await sbFetch(`posts?id=eq.${id}&select=id,title,body,ytid,imgurl,tag`);
+  const p = data && data[0];
+  if(!p) { showToast('게시물을 찾을 수 없습니다.'); return; }
+  document.getElementById('edit-title').value = p.title||'';
+  document.getElementById('edit-body').value = p.body||'';
+  document.getElementById('edit-ytid').value = p.ytid||'';
+  const ep = document.getElementById('edit-yt-preview');
+  const ei = document.getElementById('edit-yt-preview-img');
+  if(p.ytid && ep && ei){ ei.src=`https://img.youtube.com/vi/${p.ytid}/mqdefault.jpg`; ep.style.display='block'; }
+  else if(ep) ep.style.display='none';
+  document.getElementById('edit-imgurl').value = (p.imgurl&&!p.imgurl.startsWith('data:'))?p.imgurl:'';
+  document.getElementById('editModal').classList.add('show');
+}
+function closeEditModal(e) {
+  if(!e||e.target===document.getElementById('editModal'))
+    document.getElementById('editModal').classList.remove('show');
+}
+async function saveEdit() {
+  const id = parseInt(document.getElementById('edit-idx').value);
+  const tab = parseInt(document.getElementById('edit-tab').value);
+  const title = document.getElementById('edit-title').value.trim();
+  const body = document.getElementById('edit-body').value.trim();
+  const ytid = document.getElementById('edit-ytid').value.trim();
+  const newUrl = document.getElementById('edit-imgurl').value.trim();
+  if(!title){ showToast('제목을 입력하세요'); return; }
+  const data = { title };
+  // 빈 값이 아닐 때만 업데이트
+  data.body = body;
+  data.ytid = ytid;
+  if(newUrl) data.imgurl = newUrl;
+  showToast('수정 중...');
+  await updatePost_sb(id, data);
+  await renderBoard(tab);
+  await renderAdminPostList(tab);
+  document.getElementById('editModal').classList.remove('show');
+  showToast('수정되었습니다 ✅');
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// INIT
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+document.addEventListener('contextmenu', e => {
+  if(e.target.closest('.sbody')) e.preventDefault();
+});
+document.addEventListener('copy', e => {
+  if(e.target.closest('.sbody')) e.preventDefault();
+});
+buildSutra();
+setupSutraScrollTop();
+setupAdmScrollTop();
+loadTabNames();
+[1,2,3,4,5].forEach(i=>{ renderBoard(i); setupScrollTop('p'+i,'st'+i); });
+updateBadges();
+setTimeout(()=>document.getElementById('splash').classList.add('hide'),2300);
+
+// 확대/축소 차단 (입력창 제외)
+document.addEventListener('touchstart',function(e){
+  if(e.touches.length>1) e.preventDefault();
+},{passive:false});
+var lastTap=0;
+document.addEventListener('touchend',function(e){
+  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA') return;
+  var now=Date.now();
+  if(now-lastTap<300) e.preventDefault();
+  lastTap=now;
+},{passive:false});
+document.addEventListener('gesturestart',function(e){
+  e.preventDefault();
+},{passive:false});
+</script>
+
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(r => console.log('SW 등록:', r.scope))
+      .catch(e => console.log('SW 실패(무시가능):', e));
+  });
+}
+</script>
+</body>
+</html>
